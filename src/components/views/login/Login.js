@@ -16,5 +16,4 @@ const Login = () => {
 
 export default Login;
 
-const StyledLogin = styled.div`
-`;
+const StyledLogin = styled.div``;

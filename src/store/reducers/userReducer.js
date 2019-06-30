@@ -1,5 +1,5 @@
 const initState = {
-    isDark: false
+    isDark: true
 }
 
 const userReducer = (state = initState, action) => {
