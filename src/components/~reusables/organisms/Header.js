@@ -74,11 +74,12 @@ const StyledHeader = styled.header`
     font-weight: bold;
 
     .logo-text {
-      padding-top: 4px;
+      padding-top: 20px;
       padding-left: ${extra_small_space};
     }
 
     .logo-icon {
+      padding-top: ${small_space};
       width: 40px;
       img {
         width: inherit;
@@ -95,5 +96,3 @@ const StyledHeader = styled.header`
     color: ${props => (props.isDark ? secondary : alt_secondary)};
   }
 `;
-
-
