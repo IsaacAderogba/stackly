@@ -1,7 +1,8 @@
 import * as types from "../actions/authActions";
 
 const initState = {
-  authError: null
+  authError: null,
+  signoutError: null
 };
 
 const authReducer = (state = initState, action) => {
@@ -20,6 +21,21 @@ const authReducer = (state = initState, action) => {
       return {
         ...state,
         authError: action.payload
+      };
+    case types.SIGN_OUT:
+      console.log("BEGIN SIGN OUT");
+      return state;
+    case types.SIGN_OUT_SUCCESS:
+      console.log("SIGNOUT SUCCESS");
+      return {
+        ...state,
+        signoutError: null
+      };
+    case types.SIGN_OUT_FAILURE:
+      console.log("SIGNOUT FAILURE");
+      return {
+        ...state,
+        signoutError: action.payload
       };
     default:
       return state;
