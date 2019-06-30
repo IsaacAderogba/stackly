@@ -74,7 +74,7 @@ const StyledHeader = styled.header`
     font-weight: bold;
 
     .logo-text {
-      padding-top: ${extra_small_space};
+      padding-top: 4px;
       padding-left: ${extra_small_space};
     }
 

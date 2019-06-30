@@ -1,10 +1,103 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import {
+  background,
+  alt_background,
+  secondary,
+  alt_secondary,
+  text
+} from "../../~reusables/variables/colors";
+import {
+  extra_large_space,
+  medium_space_3
+} from "../../~reusables/variables/spacing";
+import {
+  body_hero,
+  heading_1,
+  heading_2,
+  body_1
+} from "../../~reusables/variables/font-sizes";
+import { Input } from "../../~reusables/atoms/Inputs";
+import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
+const SignupBody = props => {
+  const { isDark } = props;
 
-const SignupBody = () => {
-    return (
-        <div>SignupBody</div>
-    )
-}
+  return (
+    <StyledSignupBody isDark={isDark}>
+      <div>
+        <h1>Your Skills-Based Resume</h1>
+        <p>
+          Stackly helps you highlight your skills based on evidence. For each
+          skill you list, proficiency is determined based on the number of
+          projects you have completed that use that skill.
+        </p>
+        <form>
+          <Input placeholder="Your email" />
+          <Input placeholder="Your password" />
+          <ButtonPrimary width="200px" isDark={isDark}>
+            Sign Up
+          </ButtonPrimary>
+        </form>
+      </div>
+    </StyledSignupBody>
+  );
+};
 
-export default SignupBody;
+const mapStateToProps = state => {
+  return {
+    isDark: state.user.isDark
+  };
+};
+
+export default connect(mapStateToProps)(SignupBody);
+
+const StyledSignupBody = styled.main`
+  background-color: ${props => (props.isDark ? background : alt_background)};
+
+  > div {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: ${extra_large_space} 0;
+
+    h1 {
+      color: ${props => (props.isDark ? secondary : alt_secondary)};
+      text-align: center;
+      font-size: ${heading_1};
+    }
+
+    p {
+      margin: 0 auto;
+      color: ${text};
+      font-size: ${body_hero};
+      text-align: center;
+      width: 75%;
+    }
+
+    form {
+      margin: ${medium_space_3} auto;
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+
+      button {
+        margin: 0 auto;
+      }
+    }
+
+    @media only screen and (max-width: ${tablet_max_width}) {
+      h1 {
+        font-size: ${heading_2};
+      }
+      p {
+          font-size: ${body_1};
+          width: 90%;
+      }
+      form {
+          width: 60%;
+      }
+    }
+  }
+`;

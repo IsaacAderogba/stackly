@@ -28,7 +28,7 @@ const Footer = props => {
           <span role="img" aria-label="love">
             🤘🏼️
           </span>{" "}
-          by <a href="https://github.com/IsaacAderogba"> Isaac</a>
+          by <a href="https://github.com/IsaacAderogba">Isaac</a>
         </p>
       </div>
     </StyledFooter>
