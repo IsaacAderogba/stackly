@@ -24,7 +24,12 @@ import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const SignupBody = props => {
-  const { isDark } = props;
+  const { user } = props;
+
+  let isDark = null;
+  if (user) {
+    isDark = user[0].isDark;
+  }
 
   return (
     <StyledSignupBody isDark={isDark}>
@@ -92,11 +97,11 @@ const StyledSignupBody = styled.main`
         font-size: ${heading_2};
       }
       p {
-          font-size: ${body_1};
-          width: 90%;
+        font-size: ${body_1};
+        width: 90%;
       }
       form {
-          width: 70%;
+        width: 70%;
       }
     }
   }

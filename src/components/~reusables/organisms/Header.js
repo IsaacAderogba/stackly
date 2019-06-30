@@ -16,10 +16,15 @@ import { small_space, extra_small_space } from "../variables/spacing";
 import { body_hero } from "../variables/font-sizes";
 
 const Header = props => {
-  const { isDark } = props;
+  const { user } = props;
+
+  let isDark = null;
+  if(user) {
+    isDark = user[0].isDark
+  }
 
   return (
-    <StyledHeader isDark={isDark}>
+    <StyledHeader isDark={isDark} >
       <nav>
         <Link className="logo" to="/">
           <div className="logo-icon">

@@ -14,7 +14,12 @@ import {
 import { small_space } from "../variables/spacing";
 
 const Footer = props => {
-  const { isDark } = props;
+    const { user } = props;
+
+    let isDark = null;
+    if(user) {
+      isDark = user[0].isDark
+    }
 
   return (
     <StyledFooter isDark={isDark}>

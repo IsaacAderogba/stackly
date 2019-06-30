@@ -18,7 +18,12 @@ import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const LoginBody = props => {
-  const { isDark } = props;
+    const { user } = props;
+
+    let isDark = null;
+    if (user) {
+      isDark = user[0].isDark;
+    }
 
   return (
     <StyledLoginBody isDark={isDark}>
