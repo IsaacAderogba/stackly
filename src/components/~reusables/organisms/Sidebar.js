@@ -59,7 +59,7 @@ const StyledSidebar = styled.aside`
 
   .grey-logo {
     margin: 0 auto;
-    width: 60%;
+    width: 70%;
 
     img {
       width: 90%;

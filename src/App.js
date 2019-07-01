@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import styled from 'styled-components';
+import styled from "styled-components";
 import Login from "./components/views/login/Login";
 import Signup from "./components/views/signup/Signup";
 import Skills from "./components/views/skills/Skills";
@@ -32,7 +32,7 @@ function App() {
 export default App;
 
 const StyledApp = styled.div`
--webkit-animation: fadein 1.25s; /* Safari, Chrome and Opera > 12.1 */
+  -webkit-animation: fadein 1.25s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 1.25s; /* Firefox < 16 */
   -ms-animation: fadein 1.25s; /* Internet Explorer */
   -o-animation: fadein 1.25s; /* Opera < 12.1 */
@@ -81,4 +81,4 @@ const StyledApp = styled.div`
       opacity: 1;
     }
   }
-`
+`;
