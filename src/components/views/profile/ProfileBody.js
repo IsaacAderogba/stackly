@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { updateProfile } from "../../../store/actions/userActions";
+import {
+  updateProfile,
+  setDarkTheme
+} from "../../../store/actions/userActions";
 import { Input } from "../../~reusables/atoms/Inputs";
 import darkTheme from "../../~reusables/assets/dark-theme.png";
 import lightTheme from "../../~reusables/assets/light-theme.png";
@@ -26,7 +29,7 @@ import { ButtonPrimary, ButtonSecondary } from "../../~reusables/atoms/Buttons";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const ProfileBody = props => {
-  const { user, updateProfile } = props;
+  const { user, updateProfile, setDarkTheme } = props;
   const [firstName, setFirstName] = useState(
     "firstName" in user[0] ? user[0].firstName : ""
   );
@@ -51,6 +54,10 @@ const ProfileBody = props => {
       updateProfile({ firstName, lastName, id: user[0].id });
     }
     // call correct action creator
+  };
+
+  const onSetDarkTheme = bool => {
+    setDarkTheme({ value: bool, userId: user[0].id });
   };
 
   return (
@@ -103,10 +110,16 @@ const ProfileBody = props => {
       <section>
         <p className="label">Choose your theme</p>
         <div className="theme-options">
-          <div className={`dark-theme ${isDark}`}>
+          <div
+            onClick={() => onSetDarkTheme(true)}
+            className={`dark-theme ${isDark}`}
+          >
             <img src={darkTheme} alt="" />
           </div>
-          <div className={`light-theme ${!isDark}`}>
+          <div
+            onClick={() => onSetDarkTheme(false)}
+            className={`light-theme ${!isDark}`}
+          >
             <img src={lightTheme} alt="" />
           </div>
         </div>
@@ -124,7 +137,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateProfile: profile => dispatch(updateProfile(profile))
+    updateProfile: profile => dispatch(updateProfile(profile)),
+    setDarkTheme: darkTheme => dispatch(setDarkTheme(darkTheme))
   };
 };
 
@@ -228,11 +242,11 @@ const StyledBody = styled.section`
     flex-direction: column;
 
     form {
-      width: 90%;
+      width: 100%;
     }
 
     section {
-      width: 90%;
+      width: 100%;
       margin-left: 0;
     }
   }

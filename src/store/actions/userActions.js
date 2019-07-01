@@ -2,9 +2,16 @@ export const IS_DARK = 'IS_DARK';
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
 export const UPDATE_FAILED = "UPDATE_FAILED";
 
-export const getTheme = () => {
+export const setDarkTheme = (darkTheme) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
-
+        const firestore = getFirestore();
+        firestore.collection('users').doc(darkTheme.userId).update({
+            isDark: darkTheme.value
+        }).then(() => {
+            console.log('success')
+        }).catch(() => {
+            console.log('failure');
+        })
     }
 }
 
