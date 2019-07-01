@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { secondary, text, alt_secondary } from '../variables/colors';
 import { body_1 } from '../variables/font-sizes'
 
-const ProfileImage = ({name, image, isDark}) => {
+const ProfileImage = ({name, image, isDark, size}) => {
     return (
-        <StyledImage isDark={isDark}>
+        <StyledImage isDark={isDark} size={size}>
             <div>
                 <img src={image} alt="" />
             </div>
-            <p>{name}</p>
+            {name ? <p>{name}</p> : null}
         </StyledImage>
     )
 }
@@ -25,8 +25,8 @@ const StyledImage = styled.div`
     div {
         border-radius: 50%;
         border: 2px solid ${text};
-        width: 80px;
-        height: 80px;
+        width: ${props => (props.size ? props.size : '80px')};
+        height: ${props => (props.size ? props.size : '80px')};
 
         img {
             border-radius: inherit;

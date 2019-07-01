@@ -61,7 +61,8 @@ export const signUp = newUser => {
             email: newUser.email,
             isDark: false,
             firstName: "Your first name",
-            lastName: "Your last name"
+            lastName: "Your last name",
+            image: ''
           });
       })
       .then(() => {

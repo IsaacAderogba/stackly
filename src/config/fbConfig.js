@@ -1,4 +1,5 @@
 import firebase from 'firebase/app'; // import just base features of firebase app
+import "firebase/storage";
 import 'firebase/firestore';
 import 'firebase/auth';
 
@@ -7,11 +8,13 @@ const firebaseConfig = {
     authDomain: "stackly-b8313.firebaseapp.com",
     databaseURL: "https://stackly-b8313.firebaseio.com",
     projectId: "stackly-b8313",
-    storageBucket: "",
+    storageBucket: "gs://stackly-b8313.appspot.com/",
     messagingSenderId: "549964960873",
     appId: "1:549964960873:web:5d7bdf5ee3226315"
   };
 
   firebase.initializeApp(firebaseConfig);
+  export const storage = firebase.storage();
+
 
   export default firebase;
