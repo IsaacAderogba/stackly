@@ -6,6 +6,10 @@ export const SIGN_OUT = "SIGN_OUT";
 export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 export const SIGN_OUT_FAILURE = "SIGN_OUT_FAILRE";
 
+export const SIGN_UP = "SIGN_UP";
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
+
 export const signIn = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -40,8 +44,29 @@ export const signOut = () => {
   };
 };
 
-export const signUp = (newUser) => {
-  return (dispatch, getstate, {getFirebase, getFirestore}) => {
+export const signUp = newUser => {
+  return (dispatch, getstate, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    dispatch({ type: SIGN_UP });
 
-  }
-}
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(newUser.email, newUser.password)
+      .then(res => {
+        return firestore
+          .collection("users")
+          .doc(res.user.uid)
+          .set({
+            email: newUser.email,
+            isDark: false
+          });
+      })
+      .then(() => {
+        dispatch({ type: SIGN_UP_SUCCESS });
+      })
+      .catch(err => {
+        dispatch({ type: SIGN_UP_FAILURE, payload: err.message });
+      });
+  };
+};

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { signUp } from "../../../store/actions/authActions";
 import {
   background,
   alt_background,
@@ -24,13 +25,27 @@ import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const SignupBody = props => {
-  const { user } = props;
-  console.log(user);
+  const { user, signUp, signupError } = props;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   let isDark = null;
   if (user) {
     isDark = user.length > 0 ? user[0].isDark : null;
   }
+
+  const onEmailChange = e => {
+    setEmail(e.target.value);
+  };
+
+  const onPasswordChange = e => {
+    setPassword(e.target.value);
+  };
+
+  const onFormSubmit = e => {
+    e.preventDefault();
+    signUp({ email, password });
+  };
 
   return (
     <StyledSignupBody isDark={isDark}>
@@ -41,13 +56,22 @@ const SignupBody = props => {
           skill you list, proficiency is determined based on the number of
           projects you have completed using that skill.
         </p>
-        <form>
-          <Input placeholder="Your email" />
-          <Input placeholder="Your password" />
+        <form onSubmit={onFormSubmit}>
+          <Input
+            value={email}
+            onChange={onEmailChange}
+            placeholder="Your email"
+          />
+          <Input
+            value={password}
+            onChange={onPasswordChange}
+            placeholder="Your password"
+          />
           <ButtonPrimary width="200px" isDark={isDark}>
             Sign Up
           </ButtonPrimary>
         </form>
+        {signupError ? <p className="error">{signupError}</p> : null}
       </div>
     </StyledSignupBody>
   );
@@ -55,11 +79,20 @@ const SignupBody = props => {
 
 const mapStateToProps = state => {
   return {
-    isDark: state.user.isDark
+    signupError: state.auth.signupError
   };
 };
 
-export default connect(mapStateToProps)(SignupBody);
+const mapDispatchToProps = dispatch => {
+  return {
+    signUp: newUser => dispatch(signUp(newUser))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignupBody);
 
 const StyledSignupBody = styled.main`
   background-color: ${props => (props.isDark ? background : alt_background)};
@@ -81,6 +114,12 @@ const StyledSignupBody = styled.main`
       font-size: ${body_hero};
       text-align: center;
       width: 75%;
+    }
+
+    .error {
+      color: #bb0000;
+      text-align: center;
+      font-size: ${body_1};
     }
 
     form {
