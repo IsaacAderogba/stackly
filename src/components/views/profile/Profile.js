@@ -5,29 +5,31 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import IsAuthUser from "../../hoc/IsAuthUser";
 import { signOut } from "../../../store/actions/authActions";
-import { ButtonTertiary } from "../../~reusables/atoms/Buttons";
 import Sidebar from "../../~reusables/organisms/Sidebar";
 import { background, alt_background } from "../../~reusables/variables/colors";
 import ProfileHeader from "./ProfileHeader";
 import MobileNavbar from "../../~reusables/organisms/MobileNavbar";
+import ProfileBody from "./ProfileBody";
 
 const Profile = props => {
-  const { signOut, auth, user } = props;
+  const { user } = props;
+
   let isDark = null;
   if (user) {
     isDark = user.length > 0 ? user[0].isDark : null;
+    return (
+      <StyledProfile isDark={isDark}>
+        <Sidebar user={user} />
+        <MobileNavbar user={user} />
+        <div>
+          <ProfileHeader user={user} />
+          <ProfileBody user={user} />
+        </div>
+      </StyledProfile>
+    );
+  } else {
+    return <div>Loading...</div>;
   }
-
-  return (
-    <StyledProfile isDark={isDark}>
-      <Sidebar user={user} />
-      <MobileNavbar user={user}  />
-      <div>
-
-      <ProfileHeader user={user} />
-      </div>
-    </StyledProfile>
-  );
 };
 
 const mapStateToProps = state => {

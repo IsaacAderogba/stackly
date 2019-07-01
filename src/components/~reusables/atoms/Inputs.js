@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { small_space, medium_space_1 } from "../variables/spacing";
-import { text, primary } from "../variables/colors";
+import { text, primary, secondary, alt_secondary } from "../variables/colors";
 import { button_text } from "../variables/font-sizes";
 
 export const Input = styled.input`
@@ -14,7 +14,7 @@ export const Input = styled.input`
   border-radius: 4px;
   padding-left: ${small_space};
   margin-bottom: ${medium_space_1};
-  color: ${text};
+  color: ${props => (props.isDark ? secondary : alt_secondary)};
 
   &:focus {
     border-color: ${primary};

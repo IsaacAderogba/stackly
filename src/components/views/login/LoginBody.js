@@ -38,7 +38,7 @@ const LoginBody = props => {
 
   const onFormSubmit = e => {
     e.preventDefault();
-    signIn({ email, password })
+    signIn({ email, password });
   };
 
   return (
@@ -47,11 +47,13 @@ const LoginBody = props => {
         <h2>Sign in to your account</h2>
         <form onSubmit={onFormSubmit}>
           <Input
+            isDark={isDark}
             value={email}
             onChange={onEmailChange}
             placeholder="Your email"
           />
           <Input
+            isDark={isDark}
             value={password}
             onChange={onPasswordChange}
             placeholder="Your password"

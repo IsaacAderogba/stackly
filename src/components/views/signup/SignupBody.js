@@ -58,11 +58,13 @@ const SignupBody = props => {
         </p>
         <form onSubmit={onFormSubmit}>
           <Input
+            isDark={isDark}
             value={email}
             onChange={onEmailChange}
             placeholder="Your email"
           />
           <Input
+            isDark={isDark}
             value={password}
             onChange={onPasswordChange}
             placeholder="Your password"

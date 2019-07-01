@@ -4,8 +4,9 @@ import { tablet_max_width } from "../variables/media-queries";
 // import MobileNavItem from "./MobileNavItem";
 import { small_space } from "../variables/spacing";
 import { background, alt_background, lightgrey } from "../variables/colors";
+import MobileNavItem from "../molecules/MobileNavItem";
 
-const MobileNavbar = ({ user, icons, texts }) => {
+const MobileNavbar = ({ user }) => {
   let isDark = null;
   if (user) {
     isDark = user.length > 0 ? user[0].isDark : null;
@@ -13,14 +14,13 @@ const MobileNavbar = ({ user, icons, texts }) => {
 
   return (
     <StyledMN isDark={isDark}>
-      hi
-      {/* <MobileNavItem icon={icons.search} text={texts.search} path="/discover" />
-      <MobileNavItem icon={icons.match} text={texts.match} path="/match" />
+      <MobileNavItem isDark={isDark} icon="list" text="Skills" path="/skills" />
       <MobileNavItem
-        icon={icons.settings}
-        text={texts.settings}
+        isDark={isDark}
+        icon="person_outline"
+        text="Profile"
         path="/profile"
-      /> */}
+      />
     </StyledMN>
   );
 };
