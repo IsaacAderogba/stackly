@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import styled from 'styled-components';
 import Login from "./components/views/login/Login";
 import Signup from "./components/views/signup/Signup";
-import Dashboard from "./components/views/dashboard/Dashboard";
+import Skills from "./components/views/skills/Skills";
 import Profile from "./components/views/profile/Profile";
 
 function App() {
@@ -17,8 +17,8 @@ function App() {
       />
       <Route
         exact
-        path="/dashboard"
-        render={routeProps => <Dashboard {...routeProps} />}
+        path="/skills"
+        render={routeProps => <Skills {...routeProps} />}
       />
       <Route
         exact

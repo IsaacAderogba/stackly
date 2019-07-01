@@ -7,7 +7,7 @@ import { signOut } from "../../../store/actions/authActions";
 import { ButtonTertiary } from "../../~reusables/atoms/Buttons";
 import Sidebar from "../../~reusables/organisms/Sidebar"
 
-const Profile = props => {
+const Skills = props => {
   const { signOut, auth, user } = props;
   console.log(user);
 
@@ -49,4 +49,4 @@ export default compose(
     ];
   }),
   IsAuthUser
-)(Profile);
+)(Skills);
