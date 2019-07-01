@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { small_space, medium_space_2 } from "../variables/spacing";
 import { primary, text } from "../variables/colors";
-import { body_hero } from "../variables/font-sizes";
+import { body_1 } from "../variables/font-sizes";
 
 const SideNavItem = ({ icon, text, path, isDark }) => {
   return (
@@ -19,7 +19,7 @@ const SideNavItem = ({ icon, text, path, isDark }) => {
 };
 
 const StyledNavItem = styled.div`
-  font-size: ${body_hero};
+  font-size: ${body_1};
   padding: 0 ${small_space};
 
   a {

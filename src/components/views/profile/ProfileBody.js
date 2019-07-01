@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { updateProfile } from '../../../store/actions/userActions';
+import { updateProfile } from "../../../store/actions/userActions";
 import { Input } from "../../~reusables/atoms/Inputs";
+import darkTheme from "../../~reusables/assets/dark-theme.png";
+import lightTheme from "../../~reusables/assets/light-theme.png";
 import {
   medium_space_3,
   medium_space_1,
@@ -15,10 +17,13 @@ import {
   lightgrey,
   text,
   secondary,
-  alt_secondary
+  alt_secondary,
+  background,
+  primary
 } from "../../~reusables/variables/colors";
 import { body_1 } from "../../~reusables/variables/font-sizes";
 import { ButtonPrimary, ButtonSecondary } from "../../~reusables/atoms/Buttons";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const ProfileBody = props => {
   const { user, updateProfile } = props;
@@ -42,8 +47,8 @@ const ProfileBody = props => {
   const onFormSubmit = e => {
     e.preventDefault();
     setEditMode(false);
-    if(firstName && lastName) {
-        updateProfile({firstName, lastName, id: user[0].id })
+    if (firstName && lastName) {
+      updateProfile({ firstName, lastName, id: user[0].id });
     }
     // call correct action creator
   };
@@ -95,7 +100,17 @@ const ProfileBody = props => {
           </ButtonSecondary>
         )}
       </form>
-      <section />
+      <section>
+        <p className="label">Choose your theme</p>
+        <div className="theme-options">
+          <div className={`dark-theme ${isDark}`}>
+            <img src={darkTheme} alt="" />
+          </div>
+          <div className={`light-theme ${!isDark}`}>
+            <img src={lightTheme} alt="" />
+          </div>
+        </div>
+      </section>
     </StyledBody>
   );
 };
@@ -107,14 +122,17 @@ const mapStateToProps = state => {
   };
 };
 
-  const mapDispatchToProps = dispatch => {
-    return {
-        updateProfile: (profile) => dispatch(updateProfile(profile))
-    };
+const mapDispatchToProps = dispatch => {
+  return {
+    updateProfile: profile => dispatch(updateProfile(profile))
   };
+};
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   firestoreConnect()
 )(ProfileBody);
 
@@ -124,13 +142,58 @@ const StyledBody = styled.section`
   justify-content: space-between;
 
   section {
-    width: 50%;
+    width: 60%;
     flex-grow: 1;
     margin-left: ${small_space};
+
+    .theme-options {
+      display: flex;
+      justify-content: space-between;
+
+      .dark-theme,
+      .light-theme {
+        flex-basis: 200px;
+        flex-grow: 1;
+        max-width: 47%;
+        border: 2px solid ${text};
+        border-radius: 8px;
+        cursor: pointer;
+
+        img {
+          width: 100%;
+          border-radius: inherit;
+          object-fit: cover;
+        }
+      }
+
+      .dark-theme.true,
+      .light-theme.true {
+        border-color: ${primary};
+      }
+
+      .dark-theme {
+        background-color: ${background};
+      }
+
+      .light-theme {
+        background-color: ${secondary};
+      }
+      @media only screen and (max-width: 900px) {
+        flex-direction: column;
+
+        .dark-theme,
+        .light-theme {
+          flex-basis: 110px;
+          flex-grow: 0;
+          max-width: 100%;
+          margin-bottom: ${medium_space_1};
+        }
+      }
+    }
   }
 
   form {
-    width: 50%;
+    width: 40%;
     flex-grow: 1;
     margin-right: ${small_space};
 
@@ -145,7 +208,7 @@ const StyledBody = styled.section`
   }
 
   button {
-    margin-top: ${medium_space_1};
+    margin: ${medium_space_1} 0;
   }
 
   .label {
@@ -159,5 +222,18 @@ const StyledBody = styled.section`
     padding-bottom: ${small_space};
     margin-bottom: ${extra_small_space};
     border-bottom: 1px solid ${lightgrey};
+  }
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+
+    form {
+      width: 90%;
+    }
+
+    section {
+      width: 90%;
+      margin-left: 0;
+    }
   }
 `;

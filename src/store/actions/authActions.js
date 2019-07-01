@@ -59,7 +59,9 @@ export const signUp = newUser => {
           .doc(res.user.uid)
           .set({
             email: newUser.email,
-            isDark: false
+            isDark: false,
+            firstName: "Your first name",
+            lastName: "Your last name"
           });
       })
       .then(() => {
