@@ -10,13 +10,14 @@ import { background, alt_background } from "../../~reusables/variables/colors";
 import ProfileHeader from "./ProfileHeader";
 import MobileNavbar from "../../~reusables/organisms/MobileNavbar";
 import ProfileBody from "./ProfileBody";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const Profile = props => {
   const { user } = props;
 
   let isDark = null;
-  if (user) {
-    isDark = user.length > 0 ? user[0].isDark : null;
+  if (user && user.length > 0) {
+    isDark = user[0].isDark;
     return (
       <StyledProfile isDark={isDark}>
         <Sidebar user={user} />
@@ -72,4 +73,8 @@ const StyledProfile = styled.section`
     display: flex;
     flex-direction: column;
   }
+
+  @media only screen and (max-width: ${tablet_max_width}) {
+      margin-bottom: 80px;
+    }
 `;

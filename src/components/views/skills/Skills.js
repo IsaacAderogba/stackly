@@ -12,19 +12,18 @@ import MobileNavbar from "../../~reusables/organisms/MobileNavbar";
 const Skills = props => {
   const { user } = props;
   let isDark = null;
-  if (user) {
-    isDark = user.length > 0 ? user[0].isDark : null;
+  if (user && user.length > 0) {
+    isDark = user[0].isDark;
+    return (
+      <StyledSkills isDark={isDark}>
+        <Sidebar user={user} />
+        <MobileNavbar user={user} />
+        <div>{/* <ProfileHeader user={user} /> */}</div>
+      </StyledSkills>
+    );
+  } else {
+    return <div>Loading...</div>;
   }
-
-  return (
-    <StyledSkills isDark={isDark}>
-      <Sidebar user={user} />
-      <MobileNavbar user={user} />
-      <div>
-        {/* <ProfileHeader user={user} /> */}
-      </div>
-    </StyledSkills>
-  );
 };
 
 const mapStateToProps = state => {

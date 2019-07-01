@@ -7,6 +7,7 @@ import {
   updateProfile,
   setDarkTheme
 } from "../../../store/actions/userActions";
+import { signOut } from "../../../store/actions/authActions";
 import { Input } from "../../~reusables/atoms/Inputs";
 import darkTheme from "../../~reusables/assets/dark-theme.png";
 import lightTheme from "../../~reusables/assets/light-theme.png";
@@ -25,7 +26,11 @@ import {
   primary
 } from "../../~reusables/variables/colors";
 import { body_1 } from "../../~reusables/variables/font-sizes";
-import { ButtonPrimary, ButtonSecondary } from "../../~reusables/atoms/Buttons";
+import {
+  ButtonPrimary,
+  ButtonSecondary,
+  ButtonTertiary
+} from "../../~reusables/atoms/Buttons";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const ProfileBody = props => {
@@ -53,7 +58,6 @@ const ProfileBody = props => {
     if (firstName && lastName) {
       updateProfile({ firstName, lastName, id: user[0].id });
     }
-    // call correct action creator
   };
 
   const onSetDarkTheme = bool => {
@@ -123,28 +127,29 @@ const ProfileBody = props => {
             <img src={lightTheme} alt="" />
           </div>
         </div>
+        <ButtonTertiary
+          className="log-out"
+          onClick={() => signOut()}
+          isDark={isDark}
+        >
+          Log Out
+        </ButtonTertiary>
       </section>
     </StyledBody>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    // user: state.firestore.ordered.user,
-    // auth: state.firebase.auth
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     updateProfile: profile => dispatch(updateProfile(profile)),
-    setDarkTheme: darkTheme => dispatch(setDarkTheme(darkTheme))
+    setDarkTheme: darkTheme => dispatch(setDarkTheme(darkTheme)),
+    signOut: () => dispatch(signOut())
   };
 };
 
 export default compose(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   ),
   firestoreConnect()
@@ -154,6 +159,10 @@ const StyledBody = styled.section`
   padding: 0 ${medium_space_3};
   display: flex;
   justify-content: space-between;
+
+  .log-out {
+    display: none;
+  }
 
   section {
     width: 60%;
@@ -238,7 +247,7 @@ const StyledBody = styled.section`
     border-bottom: 1px solid ${lightgrey};
   }
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 800px) {
     flex-direction: column;
 
     form {
@@ -248,6 +257,16 @@ const StyledBody = styled.section`
     section {
       width: 100%;
       margin-left: 0;
+    }
+  }
+
+  @media only screen and (max-width: ${tablet_max_width}) {
+    button {
+      float: right;
+    }
+    .log-out {
+      display: block;
+      margin-bottom: ${small_space};
     }
   }
 `;

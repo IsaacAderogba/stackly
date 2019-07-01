@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { signOut } from "../../../store/actions/authActions";
 import {
   medium_space_3,
   large_space
@@ -8,18 +12,17 @@ import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import { secondary, alt_secondary } from "../../~reusables/variables/colors";
 import { heading_2 } from "../../~reusables/variables/font-sizes";
 import {
-  ButtonSecondary,
   ButtonTertiary
 } from "../../~reusables/atoms/Buttons";
 
-const ProfileHeader = (props) => {
-  const { user } = props;
+const ProfileHeader = props => {
+  const { user, signOut } = props;
 
   let isDark = null;
   if (user) {
     isDark = user.length > 0 ? user[0].isDark : null;
-    if(user.length > 0) {
-    console.log(user[0].isDark);
+    if (user.length > 0) {
+      console.log(user[0].isDark);
     }
   }
 
@@ -29,7 +32,9 @@ const ProfileHeader = (props) => {
     <StyledHeader isDark={isDark}>
       <h2>Profile</h2>
       <div className="actions">
-        <ButtonTertiary isDark={isDark}>Log Out</ButtonTertiary>
+        <ButtonTertiary onClick={() => signOut()} isDark={isDark}>
+          Log Out
+        </ButtonTertiary>
       </div>
     </StyledHeader>
   );
@@ -55,4 +60,16 @@ const StyledHeader = styled.div`
   }
 `;
 
-export default ProfileHeader;
+const mapDispatchToProps = dispatch => {
+  return {
+    signOut: () => dispatch(signOut())
+  };
+};
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  firestoreConnect()
+)(ProfileHeader);
