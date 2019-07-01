@@ -25,7 +25,7 @@ const LoginBody = props => {
 
   let isDark = null;
   if (user) {
-    isDark = user[0].isDark;
+    isDark = user.length > 0 ? user[0].isDark : null;
   }
 
   const onEmailChange = e => {
@@ -38,7 +38,7 @@ const LoginBody = props => {
 
   const onFormSubmit = e => {
     e.preventDefault();
-    signIn({ email, password });
+    signIn({ email, password })
   };
 
   return (
@@ -67,10 +67,10 @@ const LoginBody = props => {
 };
 
 const mapStateToProps = state => {
-    return {
-        authError: state.auth.authError
-    }
-}
+  return {
+    authError: state.auth.authError
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -79,7 +79,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(LoginBody);
 
@@ -107,8 +107,8 @@ const StyledLoginBody = styled.main`
     }
 
     p {
-        color: #bb0000;
-        text-align: center;
+      color: #bb0000;
+      text-align: center;
     }
 
     @media only screen and (max-width: ${tablet_max_width}) {

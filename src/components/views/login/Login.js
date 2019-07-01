@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../../~reusables/organisms/Header";
 import Footer from "../../~reusables/organisms/Footer";
 import LoginBody from "./LoginBody";
+import HasLoggedIn from "../../hoc/HasLoggedIn";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
@@ -21,7 +22,8 @@ const Login = props => {
 
 const mapStateToProps = state => {
   return {
-    user: state.firestore.ordered.user
+    user: state.firestore.ordered.user,
+    auth: state.firebase.auth
   };
 };
 
@@ -31,11 +33,12 @@ export default compose(
     return [
       {
         collection: "users",
-        where: ["email", "==", "isaacaderogba1@gmail.com"],
+        where: ["email", "==", `${props.auth.email}`],
         storeAs: "user"
       }
     ];
-  })
+  }),
+  HasLoggedIn
 )(Login);
 
 const StyledLogin = styled.div``;

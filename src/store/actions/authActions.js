@@ -39,3 +39,9 @@ export const signOut = () => {
       });
   };
 };
+
+export const signUp = (newUser) => {
+  return (dispatch, getstate, {getFirebase, getFirestore}) => {
+
+  }
+}

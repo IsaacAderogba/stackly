@@ -25,10 +25,11 @@ import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const SignupBody = props => {
   const { user } = props;
+  console.log(user);
 
   let isDark = null;
   if (user) {
-    isDark = user[0].isDark;
+    isDark = user.length > 0 ? user[0].isDark : null;
   }
 
   return (

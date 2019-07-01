@@ -20,7 +20,7 @@ const Header = props => {
 
   let isDark = null;
   if(user) {
-    isDark = user[0].isDark
+    isDark = user.length > 0 ? user[0].isDark : null;
   }
 
   return (
