@@ -75,7 +75,7 @@ export const updateProject = project => {
                   // for this given skill, I want to check projects new related skills and see if it is still there
                   let foundSkill;
                   for (let i = 0; i < project.skills.length; i++) {
-                    foundSkill = project.skills[i].value === foundProject;
+                    foundSkill = project.skills[i].value === offlineSkill.id;
                     if (foundSkill) {
                       break; // if found the skill, then break as it means the skill has not changed
                     }
@@ -83,11 +83,6 @@ export const updateProject = project => {
 
                   // if it isn't, then update that skill, removing THIS project's id from it
                   if (!foundSkill) {
-                    // console.log('executed');
-                    // console.log(offlineSkill.projects.filter(
-                    //   project => project !== project.id
-                    // ))
-                    // console.log(offlineSkill, project.id)
                     firestore
                       .collection("skills")
                       .doc(offlineSkill.id)
