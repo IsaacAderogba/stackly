@@ -4,7 +4,10 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import Select from "react-select";
-import { createProject } from "../../../store/actions/projectActions";
+import {
+  createProject,
+  updateProject
+} from "../../../store/actions/projectActions";
 import { ButtonPrimary } from "../atoms/Buttons";
 import { background, white, text } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
@@ -15,13 +18,16 @@ import ColorPicker from "../atoms/ColorPicker";
 
 const ProjectModal = props => {
   const { closeModal, user, skills, createProject, selectProject } = props;
-  const [projectColor, setProjectColor] = useState(selectProject ? selectProject.color : "#be215b");
-  const [projectName, setProjectName] = useState(selectProject ? selectProject.name : "");
-  const [projectUrl, setProjectUrl] = useState(selectProject ? selectProject.url : '');
+  const [projectColor, setProjectColor] = useState(
+    selectProject ? selectProject.color : "#be215b"
+  );
+  const [projectName, setProjectName] = useState(
+    selectProject ? selectProject.name : ""
+  );
+  const [projectUrl, setProjectUrl] = useState(
+    selectProject ? selectProject.url : ""
+  );
   const [relatedSkills, setRelatedSkills] = useState([]);
-
-  // selectProject, setSelectProject
-  console.log(selectProject);
 
   let skillOptions = [];
   if (skills) {
@@ -36,14 +42,27 @@ const ProjectModal = props => {
 
   const onFormSubmit = e => {
     e.preventDefault();
+    if (selectProject) {
+      props.updateProject({
+        name: projectName,
+        url: projectUrl,
+        skills: relatedSkills,
+        color: projectColor,
+        allSkills: skills,
+        id: selectProject.id
+      });
+      // update the project
+    } else {
+      createProject({
+        userId: user[0].id,
+        name: projectName,
+        url: projectUrl,
+        skills: relatedSkills,
+        color: projectColor
+      });
+    }
+    props.setSelectProject(null);
     closeModal(false);
-    createProject({
-      userId: user[0].id,
-      name: projectName,
-      url: projectUrl,
-      skills: relatedSkills,
-      color: projectColor
-    });
   };
 
   const onCloseModal = () => {
@@ -225,7 +244,8 @@ const StyledModal = styled.div`
 
 const mapDispatchToProps = dispatch => {
   return {
-    createProject: project => dispatch(createProject(project))
+    createProject: project => dispatch(createProject(project)),
+    updateProject: project => dispatch(updateProject(project))
   };
 };
 
