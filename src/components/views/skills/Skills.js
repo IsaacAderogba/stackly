@@ -15,7 +15,7 @@ import SkillsModal from "../../~reusables/modals/SkillsModal";
 
 const Skills = props => {
   const { user } = props;
-  const [ showSkillsModal, setSkillsModal ] = useState(true);
+  const [showSkillsModal, setSkillsModal] = useState(true);
   console.log(showSkillsModal);
 
   let isDark = null;
@@ -27,9 +27,7 @@ const Skills = props => {
         <MobileNavbar user={user} />
         <div>
           {showSkillsModal ? (
-            <SkillsModal
-              closeModal={setSkillsModal}
-            />
+            <SkillsModal user={user} closeModal={setSkillsModal} />
           ) : null}
           <SkillsHeader user={user} setSkillsModal={setSkillsModal} />
           <SkillsBody user={user} />
