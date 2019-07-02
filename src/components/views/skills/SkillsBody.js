@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { medium_space_3, small_space } from "../../~reusables/variables/spacing";
+import {
+  medium_space_3,
+  small_space
+} from "../../~reusables/variables/spacing";
 import Skill from "./Skill";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
@@ -8,10 +11,12 @@ const SkillsBody = props => {
   const { user } = props;
   let isDark = user[0].isDark;
 
-  return (<StyledSkillsBody>
-    <Skill user={user} />
-    <Skill user={user} />
-  </StyledSkillsBody>);
+  return (
+    <StyledSkillsBody>
+      <Skill user={user} />
+      <Skill user={user} />
+    </StyledSkillsBody>
+  );
 };
 
 const StyledSkillsBody = styled.main`

@@ -10,11 +10,9 @@ import {
 import { body_1 } from "../../~reusables/variables/font-sizes";
 import {
   medium_space_1,
-  extra_small_space,
   small_space
 } from "../../~reusables/variables/spacing";
 import Project from "./Project";
-import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const skill = {
   projects: [0, 1, 2],

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { firestoreConnect } from "react-redux-firebase";
@@ -11,9 +11,13 @@ import MobileNavbar from "../../~reusables/organisms/MobileNavbar";
 import SkillsHeader from "./SkillsHeader";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import SkillsBody from "./SkillsBody";
+import SkillsModal from "../../~reusables/modals/SkillsModal";
 
 const Skills = props => {
   const { user } = props;
+  const [ showSkillsModal, setSkillsModal ] = useState(true);
+  console.log(showSkillsModal);
+
   let isDark = null;
   if (user && user.length > 0) {
     isDark = user[0].isDark;
@@ -22,7 +26,12 @@ const Skills = props => {
         <Sidebar user={user} />
         <MobileNavbar user={user} />
         <div>
-          <SkillsHeader user={user} />
+          {showSkillsModal ? (
+            <SkillsModal
+              closeModal={setSkillsModal}
+            />
+          ) : null}
+          <SkillsHeader user={user} setSkillsModal={setSkillsModal} />
           <SkillsBody user={user} />
         </div>
       </StyledSkills>
