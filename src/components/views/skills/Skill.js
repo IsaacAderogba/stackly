@@ -8,9 +8,7 @@ import {
   alt_secondary
 } from "../../~reusables/variables/colors";
 import { body_1 } from "../../~reusables/variables/font-sizes";
-import {
-  small_space
-} from "../../~reusables/variables/spacing";
+import { small_space } from "../../~reusables/variables/spacing";
 import Project from "./Project";
 
 const skill = {
@@ -19,7 +17,7 @@ const skill = {
 };
 
 const Skill = props => {
-  const { user, name, skillProjects } = props;
+  const { user, name, skillProjects, projects } = props;
   let isDark = user[0].isDark;
 
   const renderSkill = () => {
@@ -34,6 +32,16 @@ const Skill = props => {
     return mappedSkills;
   };
 
+  let filteredProjects = [];
+  if(projects) {
+      skillProjects.forEach(skProject => {
+        let foundProject = projects.find(project => project.id === skProject);
+        if(foundProject) {
+            filteredProjects = [...filteredProjects, foundProject]
+        }
+      })
+  }
+
   return (
     <StyledSkill isDark={isDark}>
       <div className="skills">
@@ -41,16 +49,18 @@ const Skill = props => {
         <span>{name}</span>
       </div>
       <div className="projects">
-        {skill.projects.map((project, idx) => {
-          return (
-            <Project
-              key={idx}
-              name={skill.name}
-              color={primary}
-              isDark={isDark}
-            />
-          );
-        })}
+        {filteredProjects.length > 0
+          ? filteredProjects.map(project => {
+              return (
+                <Project
+                  key={project.id}
+                  name={project.name}
+                  color={project.color}
+                  isDark={isDark}
+                />
+              );
+            })
+          : null}
       </div>
     </StyledSkill>
   );

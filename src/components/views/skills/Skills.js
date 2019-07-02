@@ -15,9 +15,9 @@ import SkillsModal from "../../~reusables/modals/SkillsModal";
 import ProjectModal from "../../~reusables/modals/ProjectModal";
 
 const Skills = props => {
-  const { user, skills } = props;
+  const { user, skills, projects } = props;
   const [showSkillsModal, setSkillsModal] = useState(false);
-  const [showProjectModal, setProjectModal] = useState(true);
+  const [showProjectModal, setProjectModal] = useState(false);
 
   let isDark = null;
   if (user && user.length > 0) {
@@ -31,14 +31,18 @@ const Skills = props => {
             <SkillsModal user={user} closeModal={setSkillsModal} />
           ) : null}
           {showProjectModal ? (
-            <ProjectModal user={user} closeModal={setProjectModal} skills={skills} />
+            <ProjectModal
+              user={user}
+              closeModal={setProjectModal}
+              skills={skills}
+            />
           ) : null}
           <SkillsHeader
             user={user}
             setSkillsModal={setSkillsModal}
             setProjectModal={setProjectModal}
           />
-          <SkillsBody user={user} skills={skills} />
+          <SkillsBody user={user} skills={skills} projects={projects} />
         </div>
       </StyledSkills>
     );
@@ -51,6 +55,7 @@ const mapStateToProps = state => {
   return {
     user: state.firestore.ordered.user,
     skills: state.firestore.ordered.skills,
+    projects: state.firestore.ordered.projects,
     auth: state.firebase.auth
   };
 };
@@ -75,6 +80,14 @@ export default compose(
       },
       {
         collection: "skills",
+        where: [
+          "userId",
+          "==",
+          `${props.user && props.user.length > 0 ? props.user[0].id : ""}`
+        ]
+      },
+      {
+        collection: "projects",
         where: [
           "userId",
           "==",

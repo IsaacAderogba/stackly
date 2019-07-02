@@ -148,7 +148,7 @@ const StyledModal = styled.div`
     }
 
     .select {
-      width: 80%;
+      width: 60%;
       margin-bottom: ${small_space};
     }
   }
