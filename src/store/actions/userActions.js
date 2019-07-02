@@ -1,4 +1,3 @@
-import { storage } from "../../config/fbConfig";
 export const IS_DARK = "IS_DARK";
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
 export const UPDATE_FAILED = "UPDATE_FAILED";

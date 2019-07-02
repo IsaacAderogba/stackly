@@ -14,9 +14,8 @@ import SkillsBody from "./SkillsBody";
 import SkillsModal from "../../~reusables/modals/SkillsModal";
 
 const Skills = props => {
-  const { user } = props;
-  const [showSkillsModal, setSkillsModal] = useState(true);
-  console.log(showSkillsModal);
+  const { user, skills } = props;
+  const [showSkillsModal, setSkillsModal] = useState(false);
 
   let isDark = null;
   if (user && user.length > 0) {
@@ -30,7 +29,7 @@ const Skills = props => {
             <SkillsModal user={user} closeModal={setSkillsModal} />
           ) : null}
           <SkillsHeader user={user} setSkillsModal={setSkillsModal} />
-          <SkillsBody user={user} />
+          <SkillsBody user={user} skills={skills} />
         </div>
       </StyledSkills>
     );
@@ -42,6 +41,7 @@ const Skills = props => {
 const mapStateToProps = state => {
   return {
     user: state.firestore.ordered.user,
+    skills: state.firestore.ordered.skills,
     auth: state.firebase.auth
   };
 };
@@ -63,6 +63,14 @@ export default compose(
         collection: "users",
         where: ["email", "==", `${props.auth.email}`],
         storeAs: "user"
+      },
+      {
+        collection: "skills",
+        where: [
+          "userId",
+          "==",
+          `${props.user && props.user.length > 0 ? props.user[0].id : ""}`
+        ]
       }
     ];
   }),

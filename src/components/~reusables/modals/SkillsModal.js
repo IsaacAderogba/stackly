@@ -5,7 +5,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { ButtonPrimary } from "../atoms/Buttons";
 import { background, white, text } from "../variables/colors";
-import { heading_3, body_2, body_1 } from "../variables/font-sizes";
+import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
 import { small_space, medium_space_1 } from "../variables/spacing";

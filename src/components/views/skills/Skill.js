@@ -9,7 +9,6 @@ import {
 } from "../../~reusables/variables/colors";
 import { body_1 } from "../../~reusables/variables/font-sizes";
 import {
-  medium_space_1,
   small_space
 } from "../../~reusables/variables/spacing";
 import Project from "./Project";
@@ -20,13 +19,13 @@ const skill = {
 };
 
 const Skill = props => {
-  const { user } = props;
+  const { user, name, skillProjects } = props;
   let isDark = user[0].isDark;
 
   const renderSkill = () => {
     let mappedSkills = [];
     for (let i = 0; i < 5; i++) {
-      if (typeof skill.projects[i] === "undefined") {
+      if (typeof skillProjects[i] === "undefined") {
         mappedSkills.push(<div key={i} className="empty-box box" />);
       } else {
         mappedSkills.push(<div key={i} className="filled-box box" />);
@@ -39,11 +38,18 @@ const Skill = props => {
     <StyledSkill isDark={isDark}>
       <div className="skills">
         <div className="skills-box">{renderSkill()}</div>
-        <span>{skill.name}</span>
+        <span>{name}</span>
       </div>
       <div className="projects">
         {skill.projects.map((project, idx) => {
-          return <Project key={idx} name={skill.name} color={primary} isDark={isDark} />;
+          return (
+            <Project
+              key={idx}
+              name={skill.name}
+              color={primary}
+              isDark={isDark}
+            />
+          );
         })}
       </div>
     </StyledSkill>
@@ -51,7 +57,7 @@ const Skill = props => {
 };
 
 const StyledSkill = styled.div`
-  margin-top: ${medium_space_1};
+  margin-top: ${small_space};
   border-bottom: 1px solid ${lightgrey};
   padding: ${small_space} 0;
   color: ${text};
