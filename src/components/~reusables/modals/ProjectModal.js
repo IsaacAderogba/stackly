@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import Select from "react-select";
+import { createProject } from "../../../store/actions/projectActions"
 import { ButtonPrimary } from "../atoms/Buttons";
 import { background, white, text } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
@@ -10,16 +12,36 @@ import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
 import { small_space, medium_space_1 } from "../variables/spacing";
 import { createSkill } from "../../../store/actions/skillActions";
+import ColorPicker from "../atoms/ColorPicker";
 
-const SkillsModal = props => {
-  const { closeModal, user, createSkill } = props;
-  const [skillName, setSkillName] = useState("");
+const ProjectModal = props => {
+  const { closeModal, user, skills, createProject } = props;
+  const [projectColor, setProjectColor] = useState("#52D2BC");
+  const [projectName, setProjectName] = useState("");
+  const [projectUrl, setProjectUrl] = useState("");
+  const [relatedSkills, setRelatedSkills] = useState([]);
+
+  let skillOptions = [];
+  if (skills) {
+    skills.forEach(skill => {
+      skillOptions.push({ value: skill.id, label: skill.name, oldArray: skill.projects });
+    });
+  }
+
+  console.log(relatedSkills);
 
   const onFormSubmit = e => {
     e.preventDefault();
-    createSkill({ userId: user[0].id, name: skillName });
-    setSkillName("");
     closeModal(false);
+    console.log(projectColor, projectName, projectUrl, relatedSkills);
+
+    createProject({
+      userId: user[0].id,
+      name: projectName,
+      url: projectUrl,
+      skills: relatedSkills,
+      color: projectColor,
+    });
   };
 
   return (
@@ -30,6 +52,7 @@ const SkillsModal = props => {
             <span className="close" onClick={() => closeModal(false)}>
               Close
             </span>
+            <ColorPicker setProjectColor={setProjectColor} />
             {
               <span className="delete" onClick={() => closeModal(false)}>
                 Delete
@@ -38,15 +61,30 @@ const SkillsModal = props => {
           </div>
           <div className="space" />
           <form onSubmit={onFormSubmit}>
-            <h4>Enter a Skill</h4>
-            <p>Stackly helps you highlight your skills based on evidence.</p>
+            <h4>Enter a Project</h4>
+            <p>A project can be linked to one or more skills.</p>
             <Input
+              margin="16px"
+              value={projectName}
+              onChange={e => setProjectName(e.target.value)}
               required
-              value={skillName}
-              onChange={e => setSkillName(e.target.value)}
-              placeholder="Skill name"
+              placeholder="Project name"
             />
-            <ButtonPrimary>Add Skill</ButtonPrimary>
+            <Input
+              margin="16px"
+              value={projectUrl}
+              onChange={e => setProjectUrl(e.target.value)}
+              required
+              placeholder="Project url"
+            />
+            <Select
+              styles={{ control: styles => ({ ...styles, borderColor: text }) }}
+              className="select"
+              isMulti
+              options={skills ? skillOptions : []}
+              onChange={e => setRelatedSkills(e)}
+            />
+            <ButtonPrimary>Enter Project</ButtonPrimary>
           </form>
           <div className="space-2" />
         </div>
@@ -103,7 +141,16 @@ const StyledModal = styled.div`
   }
 
   form {
-    width: 60%;
+    width: 90%;
+
+    input {
+      width: 80%;
+    }
+
+    .select {
+      width: 80%;
+      margin-bottom: ${small_space};
+    }
   }
 
   .popup {
@@ -151,9 +198,6 @@ const StyledModal = styled.div`
   @media only screen and (max-width: ${tablet_max_width}) {
     form {
       width: 100%;
-      input {
-        width: 80%;
-      }
     }
     h4 {
       font-size: heading_4;
@@ -172,7 +216,7 @@ const StyledModal = styled.div`
 
 const mapDispatchToProps = dispatch => {
   return {
-    createSkill: skill => dispatch(createSkill(skill))
+    createProject: project => dispatch(createProject(project))
   };
 };
 
@@ -182,4 +226,4 @@ export default compose(
     mapDispatchToProps
   ),
   firestoreConnect()
-)(SkillsModal);
+)(ProjectModal);

@@ -8,14 +8,14 @@ export const Input = styled.input`
   font-size: ${button_text};
   box-shadow: 0 0.8rem 2.5rem 0 rgba(40, 51, 63, 0.05);
   transition: all 100ms ease-in-out;
-  height: 40px;
+  height: 36px;
   width: 100%;
   max-width: 324px;
   background-color: transparent;
   border: 1px solid ${text};
   border-radius: 4px;
   padding-left: ${small_space};
-  margin-bottom: ${medium_space_1};
+  margin-bottom: ${props => (props.margin ? props.margin : medium_space_1)};
   color: ${props => (props.isDark ? secondary : alt_secondary)};
 
   &:focus {

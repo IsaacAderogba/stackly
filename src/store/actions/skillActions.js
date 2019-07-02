@@ -1,4 +1,5 @@
 export const CREATE_SKILL = "CREATE_SKILL";
+export const UPDATE_SKILL = "UPDATE_SKILL";
 
 export const createSkill = (skill) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -15,3 +16,4 @@ export const createSkill = (skill) => {
         })
     }
 } 
+

@@ -12,10 +12,12 @@ import SkillsHeader from "./SkillsHeader";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import SkillsBody from "./SkillsBody";
 import SkillsModal from "../../~reusables/modals/SkillsModal";
+import ProjectModal from "../../~reusables/modals/ProjectModal";
 
 const Skills = props => {
   const { user, skills } = props;
   const [showSkillsModal, setSkillsModal] = useState(false);
+  const [showProjectModal, setProjectModal] = useState(true);
 
   let isDark = null;
   if (user && user.length > 0) {
@@ -28,7 +30,14 @@ const Skills = props => {
           {showSkillsModal ? (
             <SkillsModal user={user} closeModal={setSkillsModal} />
           ) : null}
-          <SkillsHeader user={user} setSkillsModal={setSkillsModal} />
+          {showProjectModal ? (
+            <ProjectModal user={user} closeModal={setProjectModal} skills={skills} />
+          ) : null}
+          <SkillsHeader
+            user={user}
+            setSkillsModal={setSkillsModal}
+            setProjectModal={setProjectModal}
+          />
           <SkillsBody user={user} skills={skills} />
         </div>
       </StyledSkills>

@@ -16,7 +16,7 @@ import { heading_2 } from "../../~reusables/variables/font-sizes";
 import { ButtonTertiary, ButtonPrimary } from "../../~reusables/atoms/Buttons";
 
 const SkillsHeader = props => {
-  const { user, setSkillsModal } = props;
+  const { user, setSkillsModal, setProjectModal } = props;
 
   let isDark = null;
   if (user) {
@@ -49,7 +49,7 @@ const SkillsHeader = props => {
           <ButtonTertiary isDark={isDark} width="40px">
             <i className="material-icons">send</i>
           </ButtonTertiary>
-          <ButtonPrimary className="last-button" isDark={isDark} width="40px">
+          <ButtonPrimary onClick={() => setProjectModal(true)} className="last-button" isDark={isDark} width="40px">
             <i className="material-icons">note_add</i>
           </ButtonPrimary>
         </div>
