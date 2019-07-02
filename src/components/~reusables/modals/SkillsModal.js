@@ -17,10 +17,9 @@ const SkillsModal = props => {
     user,
     createSkill,
     selectSkill,
-    setSelectSkill,
     updateSkill
   } = props;
-  const [skillName, setSkillName] = useState("");
+  const [skillName, setSkillName] = useState(selectSkill ? selectSkill.name : '');
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -30,12 +29,12 @@ const SkillsModal = props => {
       createSkill({ userId: user[0].id, name: skillName });
     }
     setSkillName("");
-    setSelectSkill(null);
+    props.setSelectSkill(null);
     closeModal(false);
   };
 
   const onCloseModal = () => {
-    setSelectSkill(null);
+    props.setSelectSkill(null);
     closeModal(false);
   };
 

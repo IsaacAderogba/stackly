@@ -11,15 +11,17 @@ import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
 import { small_space, medium_space_1 } from "../variables/spacing";
-import { createSkill } from "../../../store/actions/skillActions";
 import ColorPicker from "../atoms/ColorPicker";
 
 const ProjectModal = props => {
-  const { closeModal, user, skills, createProject } = props;
-  const [projectColor, setProjectColor] = useState("#52D2BC");
-  const [projectName, setProjectName] = useState("");
-  const [projectUrl, setProjectUrl] = useState("");
+  const { closeModal, user, skills, createProject, selectProject } = props;
+  const [projectColor, setProjectColor] = useState(selectProject ? selectProject.color : "#be215b");
+  const [projectName, setProjectName] = useState(selectProject ? selectProject.name : "");
+  const [projectUrl, setProjectUrl] = useState(selectProject ? selectProject.url : '');
   const [relatedSkills, setRelatedSkills] = useState([]);
+
+  // selectProject, setSelectProject
+  console.log(selectProject);
 
   let skillOptions = [];
   if (skills) {
@@ -32,13 +34,9 @@ const ProjectModal = props => {
     });
   }
 
-  console.log(relatedSkills);
-
   const onFormSubmit = e => {
     e.preventDefault();
     closeModal(false);
-    console.log(projectColor, projectName, projectUrl, relatedSkills);
-
     createProject({
       userId: user[0].id,
       name: projectName,
@@ -48,24 +46,29 @@ const ProjectModal = props => {
     });
   };
 
+  const onCloseModal = () => {
+    props.setSelectProject(null);
+    closeModal(false);
+  };
+
   return (
     <StyledModal>
       <div className="popup">
         <div className="popup-inner">
           <div className="options">
-            <span className="close" onClick={() => closeModal(false)}>
+            <span className="close" onClick={onCloseModal}>
               Close
             </span>
             <ColorPicker setProjectColor={setProjectColor} />
-            {
-              <span className="delete" onClick={() => closeModal(false)}>
+            {selectProject ? (
+              <span className="delete" onClick={onCloseModal}>
                 Delete
               </span>
-            }
+            ) : null}
           </div>
           <div className="space" />
           <form onSubmit={onFormSubmit}>
-            <h4>Enter a Project</h4>
+            {selectProject ? <h4>Update Project</h4> : <h4>Enter a Project</h4>}
             <p>A project can be linked to one or more skills.</p>
             <Input
               margin="16px"
@@ -88,7 +91,9 @@ const ProjectModal = props => {
               options={skills ? skillOptions : []}
               onChange={e => setRelatedSkills(e)}
             />
-            <ButtonPrimary>Enter Project</ButtonPrimary>
+            <ButtonPrimary>
+              {selectProject ? "Update Project" : "Enter Project"}
+            </ButtonPrimary>
           </form>
           <div className="space-2" />
         </div>

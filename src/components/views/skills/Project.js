@@ -12,10 +12,17 @@ import {
   small_space
 } from "../../~reusables/variables/spacing";
 
-const Project = ({ color, name, isDark }) => {
+const Project = props => {
+  const { color, name, isDark, project } = props;
+
+  const onClickProject = () => {
+    props.setProjectModal(true);
+    props.setSelectProject(project);
+  };
+
   return (
     <StyledProject color={color} isDark={isDark}>
-      <span>{name}</span>
+      <span onClick={onClickProject}>{name}</span>
       <div className="color" />
     </StyledProject>
   );

@@ -12,13 +12,13 @@ import { small_space } from "../../~reusables/variables/spacing";
 import Project from "./Project";
 
 const Skill = props => {
-  const { user, name, skillProjects, projects, setSkillsModal, setSelectSkill, skillId } = props;
+  const { user, name, skillProjects, projects, skillId } = props;
   let isDark = user[0].isDark;
 
-  const onSkillClicked = (id) => {
-    setSkillsModal(true);
-    setSelectSkill({id, name});
-  }
+  const onSkillClicked = id => {
+    props.setSkillsModal(true);
+    props.setSelectSkill({ id, name });
+  };
 
   const renderSkill = () => {
     let mappedSkills = [];
@@ -53,6 +53,9 @@ const Skill = props => {
           ? filteredProjects.map(project => {
               return (
                 <Project
+                  setSelectProject={props.setSelectProject}
+                  setProjectModal={props.setProjectModal}
+                  project={project}
                   key={project.id}
                   name={project.name}
                   color={project.color}
