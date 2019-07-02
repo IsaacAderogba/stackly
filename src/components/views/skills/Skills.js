@@ -17,7 +17,9 @@ import ProjectModal from "../../~reusables/modals/ProjectModal";
 const Skills = props => {
   const { user, skills, projects } = props;
   const [showSkillsModal, setSkillsModal] = useState(false);
+  const [selectSkill, setSelectSkill] = useState(null);
   const [showProjectModal, setProjectModal] = useState(false);
+  const [selectProject, setSelectProject] = useState(null);
 
   let isDark = null;
   if (user && user.length > 0) {
@@ -28,13 +30,20 @@ const Skills = props => {
         <MobileNavbar user={user} />
         <div>
           {showSkillsModal ? (
-            <SkillsModal user={user} closeModal={setSkillsModal} />
+            <SkillsModal
+              user={user}
+              closeModal={setSkillsModal}
+              selectSkill={selectSkill}
+              setSelectSkill={setSelectSkill}
+            />
           ) : null}
           {showProjectModal ? (
             <ProjectModal
               user={user}
               closeModal={setProjectModal}
               skills={skills}
+              selectProject={selectProject}
+              setSelectProject={setSelectProject}
             />
           ) : null}
           <SkillsHeader
@@ -42,7 +51,15 @@ const Skills = props => {
             setSkillsModal={setSkillsModal}
             setProjectModal={setProjectModal}
           />
-          <SkillsBody user={user} skills={skills} projects={projects} />
+          <SkillsBody
+            user={user}
+            skills={skills}
+            projects={projects}
+            setSkillsModal={setSkillsModal}
+            setSelectSkill={setSelectSkill}
+            setSelectProject={setSelectProject}
+            setProjectModal={setProjectModal}
+          />
         </div>
       </StyledSkills>
     );

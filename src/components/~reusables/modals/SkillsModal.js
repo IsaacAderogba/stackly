@@ -9,44 +9,67 @@ import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
 import { small_space, medium_space_1 } from "../variables/spacing";
-import { createSkill } from "../../../store/actions/skillActions";
+import { createSkill, updateSkill } from "../../../store/actions/skillActions";
 
 const SkillsModal = props => {
-  const { closeModal, user, createSkill } = props;
+  const {
+    closeModal,
+    user,
+    createSkill,
+    selectSkill,
+    setSelectSkill,
+    updateSkill
+  } = props;
   const [skillName, setSkillName] = useState("");
 
   const onFormSubmit = e => {
     e.preventDefault();
-    createSkill({ userId: user[0].id, name: skillName });
+    if (selectSkill) {
+      updateSkill({ id: selectSkill.id, name: skillName });
+    } else {
+      createSkill({ userId: user[0].id, name: skillName });
+    }
     setSkillName("");
+    setSelectSkill(null);
     closeModal(false);
   };
+
+  const onCloseModal = () => {
+    setSelectSkill(null);
+    closeModal(false);
+  };
+
+  console.log(selectSkill);
 
   return (
     <StyledModal>
       <div className="popup">
         <div className="popup-inner">
           <div className="options">
-            <span className="close" onClick={() => closeModal(false)}>
+            <span className="close" onClick={onCloseModal}>
               Close
             </span>
-            {
-              <span className="delete" onClick={() => closeModal(false)}>
+            {selectSkill ? (
+              <span className="delete" onClick={onCloseModal}>
                 Delete
               </span>
-            }
+            ) : null}
           </div>
           <div className="space" />
           <form onSubmit={onFormSubmit}>
-            <h4>Enter a Skill</h4>
+            {selectSkill ? <h4>Update Skill</h4> : <h4>Enter a Skill</h4>}
             <p>Stackly helps you highlight your skills based on evidence.</p>
             <Input
               required
               value={skillName}
               onChange={e => setSkillName(e.target.value)}
-              placeholder="Skill name"
+              placeholder={selectSkill ? selectSkill.name : "Skill name"}
             />
-            <ButtonPrimary>Add Skill</ButtonPrimary>
+            {selectSkill ? (
+              <ButtonPrimary>Update Skill</ButtonPrimary>
+            ) : (
+              <ButtonPrimary>Add Skill</ButtonPrimary>
+            )}
           </form>
           <div className="space-2" />
         </div>
@@ -172,7 +195,8 @@ const StyledModal = styled.div`
 
 const mapDispatchToProps = dispatch => {
   return {
-    createSkill: skill => dispatch(createSkill(skill))
+    createSkill: skill => dispatch(createSkill(skill)),
+    updateSkill: skill => dispatch(updateSkill(skill))
   };
 };
 

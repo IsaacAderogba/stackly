@@ -4,7 +4,7 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import Select from "react-select";
-import { createProject } from "../../../store/actions/projectActions"
+import { createProject } from "../../../store/actions/projectActions";
 import { ButtonPrimary } from "../atoms/Buttons";
 import { background, white, text } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
@@ -24,7 +24,11 @@ const ProjectModal = props => {
   let skillOptions = [];
   if (skills) {
     skills.forEach(skill => {
-      skillOptions.push({ value: skill.id, label: skill.name, oldArray: skill.projects });
+      skillOptions.push({
+        value: skill.id,
+        label: skill.name,
+        oldArray: skill.projects
+      });
     });
   }
 
@@ -40,7 +44,7 @@ const ProjectModal = props => {
       name: projectName,
       url: projectUrl,
       skills: relatedSkills,
-      color: projectColor,
+      color: projectColor
     });
   };
 

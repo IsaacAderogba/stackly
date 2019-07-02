@@ -8,13 +8,16 @@ import Skill from "./Skill";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 
 const SkillsBody = props => {
-  const { user, skills, projects } = props;
+  const { user, skills, projects, setSelectSkill, setSkillsModal } = props;
 
   return (
     <StyledSkillsBody>
       {skills ? skills.map(skill => {
         return (
           <Skill
+            setSelectSkill={setSelectSkill}
+            setSkillsModal={setSkillsModal}
+            skillId={skill.id}
             key={skill.id}
             user={user}
             name={skill.name}

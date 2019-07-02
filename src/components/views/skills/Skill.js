@@ -11,14 +11,14 @@ import { body_1 } from "../../~reusables/variables/font-sizes";
 import { small_space } from "../../~reusables/variables/spacing";
 import Project from "./Project";
 
-const skill = {
-  projects: [0, 1, 2],
-  name: "JavaScript"
-};
-
 const Skill = props => {
-  const { user, name, skillProjects, projects } = props;
+  const { user, name, skillProjects, projects, setSkillsModal, setSelectSkill, skillId } = props;
   let isDark = user[0].isDark;
+
+  const onSkillClicked = (id) => {
+    setSkillsModal(true);
+    setSelectSkill({id, name});
+  }
 
   const renderSkill = () => {
     let mappedSkills = [];
@@ -33,20 +33,20 @@ const Skill = props => {
   };
 
   let filteredProjects = [];
-  if(projects) {
-      skillProjects.forEach(skProject => {
-        let foundProject = projects.find(project => project.id === skProject);
-        if(foundProject) {
-            filteredProjects = [...filteredProjects, foundProject]
-        }
-      })
+  if (projects) {
+    skillProjects.forEach(skProject => {
+      let foundProject = projects.find(project => project.id === skProject);
+      if (foundProject) {
+        filteredProjects = [...filteredProjects, foundProject];
+      }
+    });
   }
 
   return (
     <StyledSkill isDark={isDark}>
       <div className="skills">
         <div className="skills-box">{renderSkill()}</div>
-        <span>{name}</span>
+        <span onClick={() => onSkillClicked(skillId)}>{name}</span>
       </div>
       <div className="projects">
         {filteredProjects.length > 0
