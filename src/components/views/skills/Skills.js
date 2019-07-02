@@ -8,6 +8,7 @@ import { signOut } from "../../../store/actions/authActions";
 import Sidebar from "../../~reusables/organisms/Sidebar";
 import { background, alt_background } from "../../~reusables/variables/colors";
 import MobileNavbar from "../../~reusables/organisms/MobileNavbar";
+import SkillsHeader from "./SkillsHeader";
 
 const Skills = props => {
   const { user } = props;
@@ -18,7 +19,7 @@ const Skills = props => {
       <StyledSkills isDark={isDark}>
         <Sidebar user={user} />
         <MobileNavbar user={user} />
-        <div>{/* <ProfileHeader user={user} /> */}</div>
+        <div><SkillsHeader user={user} /></div>
       </StyledSkills>
     );
   } else {

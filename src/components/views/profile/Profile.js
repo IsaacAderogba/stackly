@@ -75,6 +75,6 @@ const StyledProfile = styled.section`
   }
 
   @media only screen and (max-width: ${tablet_max_width}) {
-      margin-bottom: 80px;
+      margin-bottom: 70px;
     }
 `;
