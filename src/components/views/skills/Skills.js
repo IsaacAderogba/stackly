@@ -9,6 +9,8 @@ import Sidebar from "../../~reusables/organisms/Sidebar";
 import { background, alt_background } from "../../~reusables/variables/colors";
 import MobileNavbar from "../../~reusables/organisms/MobileNavbar";
 import SkillsHeader from "./SkillsHeader";
+import { tablet_max_width } from "../../~reusables/variables/media-queries";
+import SkillsBody from "./SkillsBody";
 
 const Skills = props => {
   const { user } = props;
@@ -19,7 +21,10 @@ const Skills = props => {
       <StyledSkills isDark={isDark}>
         <Sidebar user={user} />
         <MobileNavbar user={user} />
-        <div><SkillsHeader user={user} /></div>
+        <div>
+          <SkillsHeader user={user} />
+          <SkillsBody user={user} />
+        </div>
       </StyledSkills>
     );
   } else {
@@ -66,5 +71,9 @@ const StyledSkills = styled.section`
     width: 100%;
     display: flex;
     flex-direction: column;
+  }
+
+  @media only screen and (max-width: ${tablet_max_width}) {
+    margin-bottom: 70px;
   }
 `;

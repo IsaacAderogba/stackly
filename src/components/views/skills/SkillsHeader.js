@@ -7,7 +7,8 @@ import { signOut } from "../../../store/actions/authActions";
 import {
   medium_space_3,
   large_space,
-  medium_space_1
+  medium_space_1,
+  small_space
 } from "../../~reusables/variables/spacing";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import { secondary, alt_secondary } from "../../~reusables/variables/colors";
@@ -41,10 +42,10 @@ const SkillsHeader = props => {
         </div>
         <div>
           <ButtonTertiary isDark={isDark} width="40px">
-            <i className="material-icons">screen_share</i>
+            <i className="material-icons">send</i>
           </ButtonTertiary>
           <ButtonPrimary className="last-button" isDark={isDark} width="40px">
-            <i className="material-icons">create_new_folder</i>
+            <i className="material-icons">note_add</i>
           </ButtonPrimary>
         </div>
       </div>
@@ -76,6 +77,10 @@ const StyledHeader = styled.div`
   }
 
   @media only screen and (max-width: ${tablet_max_width}) {
+    margin-top: ${medium_space_1};
+    padding: 0 ${small_space};
+    flex-basis: 60px;
+
     h2 {
       display: none;
     }

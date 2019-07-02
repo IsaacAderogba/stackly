@@ -36,8 +36,6 @@ const StyledNavItem = styled.div`
     font-size: 28px;
   }
 
-  
-
   .active-nav {
     color: ${primary};
     font-weight: 500;
