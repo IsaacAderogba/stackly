@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
-import IsAuthUser from "../../hoc/IsAuthUser";
 import { signOut } from "../../../store/actions/authActions";
 import { background, alt_background } from "../../~reusables/variables/colors";
 import SkillsHeader from "./SkillsHeader";
@@ -80,7 +79,6 @@ export default compose(
       }
     ];
   }),
-  IsAuthUser
 )(PublicSkills);
 
 const StyledSkills = styled.section`
