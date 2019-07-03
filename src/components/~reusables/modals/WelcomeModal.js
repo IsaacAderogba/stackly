@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { useSpring, animated } from "react-spring";
+
 import { ButtonPrimary } from "../atoms/Buttons";
 import { background, text, alt_background } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
@@ -10,13 +12,19 @@ import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
 import { small_space, medium_space_1 } from "../variables/spacing";
 import { updateProfile } from "../../../store/actions/userActions";
+import { onboardingStarted } from "../../../store/actions/authActions";
+
 import logo from "../assets/logo.png";
 
 const WelcomeModal = props => {
   const { closeModal, user, updateProfile, setNextModal } = props;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  console.log(user);
+
+  const fade = useSpring({
+    from: { opacity: 0 },
+    opacity: 1
+  });
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -29,11 +37,12 @@ const WelcomeModal = props => {
     }
     setNextModal(true);
     closeModal(false);
+    onboardingStarted();
   };
 
   return (
     <StyledModal>
-      <div className="popup">
+      <animated.div style={fade} className="popup">
         <div className="popup-inner">
           <form onSubmit={onFormSubmit}>
             <div className="logo-icon">
@@ -56,7 +65,7 @@ const WelcomeModal = props => {
             <ButtonPrimary>Get Started</ButtonPrimary>
           </form>
         </div>
-      </div>
+      </animated.div>
     </StyledModal>
   );
 };
@@ -163,7 +172,8 @@ const StyledModal = styled.div`
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateProfile: profile => dispatch(updateProfile(profile))
+    updateProfile: profile => dispatch(updateProfile(profile)),
+    onboardingStarted: () => onboardingStarted()
   };
 };
 

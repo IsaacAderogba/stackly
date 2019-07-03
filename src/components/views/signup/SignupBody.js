@@ -30,14 +30,20 @@ import SkillsModal from "../../~reusables/modals/SkillsModal";
 import ProjectModal from "../../~reusables/modals/ProjectModal";
 
 const SignupBody = props => {
-  const { user, signUp, signupError, signupLoader, signupSuccess, skills } = props;
+  const {
+    user,
+    signUp,
+    signupError,
+    signupLoader,
+    signupSuccess,
+    skills
+  } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [welcomeModal, setWelcomeModal] = useState(null);
   const [themeModal, setThemeModal] = useState(null);
   const [skillModal, setSkillModal] = useState(null);
   const [projectModal, setProjectModal] = useState(null);
-  console.log(signupSuccess);
 
   let isDark = null;
   if (user) {
@@ -90,7 +96,7 @@ const SignupBody = props => {
       ) : null}
       {projectModal ? (
         <ProjectModal
-        skills={skills}
+          skills={skills}
           user={user}
           closeModal={setProjectModal}
           skillModalStatus={projectModal}
@@ -111,6 +117,7 @@ const SignupBody = props => {
             placeholder="Your email"
           />
           <Input
+            type="password"
             isDark={isDark}
             value={password}
             onChange={onPasswordChange}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { ButtonPrimary } from "../atoms/Buttons";
 import {
   background,
-  white,
   text,
   primary,
   secondary,
@@ -18,7 +17,6 @@ import { tablet_max_width } from "../variables/media-queries";
 import {
   small_space,
   medium_space_1,
-  medium_space_2,
   extra_small_space
 } from "../variables/spacing";
 import { setDarkTheme } from "../../../store/actions/userActions";

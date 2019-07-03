@@ -61,6 +61,11 @@ const authReducer = (state = initState, action) => {
         signupError: action.payload,
         signupLoader: false
       };
+    case types.ONBOARDING_STARTED:
+      return {
+        ...state,
+        signupSuccess: false
+      }
     default:
       return state;
   }

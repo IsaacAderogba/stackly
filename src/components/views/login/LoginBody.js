@@ -53,6 +53,7 @@ const LoginBody = props => {
             placeholder="Your email"
           />
           <Input
+            type="password"
             isDark={isDark}
             value={password}
             onChange={onPasswordChange}

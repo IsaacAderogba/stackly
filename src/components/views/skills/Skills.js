@@ -13,6 +13,7 @@ import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import SkillsBody from "./SkillsBody";
 import SkillsModal from "../../~reusables/modals/SkillsModal";
 import ProjectModal from "../../~reusables/modals/ProjectModal";
+import ComponentLoader from "../../~reusables/molecules/ComponentLoader";
 
 const Skills = props => {
   const { user, skills, projects } = props;
@@ -64,7 +65,7 @@ const Skills = props => {
       </StyledSkills>
     );
   } else {
-    return <div>Loading...</div>;
+    return <ComponentLoader height="100vh" />;
   }
 };
 

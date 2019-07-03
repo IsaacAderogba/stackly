@@ -10,6 +10,8 @@ export const SIGN_UP = "SIGN_UP";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 
+export const ONBOARDING_STARTED = "ONBOARDING_STARTED"
+
 export const signIn = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -73,3 +75,9 @@ export const signUp = newUser => {
       });
   };
 };
+
+export const onboardingStarted = () => {
+  return (dispatch) => {
+    dispatch({ type: ONBOARDING_STARTED, payload: false})
+  }
+}

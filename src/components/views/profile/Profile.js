@@ -11,6 +11,7 @@ import ProfileHeader from "./ProfileHeader";
 import MobileNavbar from "../../~reusables/organisms/MobileNavbar";
 import ProfileBody from "./ProfileBody";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
+import ComponentLoader from "../../~reusables/molecules/ComponentLoader";
 
 const Profile = props => {
   const { user } = props;
@@ -29,7 +30,7 @@ const Profile = props => {
       </StyledProfile>
     );
   } else {
-    return <div>Loading...</div>;
+    return <ComponentLoader height="100vh" />;
   }
 };
 
@@ -75,6 +76,6 @@ const StyledProfile = styled.section`
   }
 
   @media only screen and (max-width: ${tablet_max_width}) {
-      margin-bottom: 70px;
-    }
+    margin-bottom: 70px;
+  }
 `;
