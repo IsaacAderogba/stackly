@@ -3,7 +3,9 @@ import * as types from "../actions/authActions";
 const initState = {
   authError: null,
   signoutError: null,
-  signupError: null
+  signupError: null,
+  signupSuccess: null,
+  signupLoader: false
 };
 
 const authReducer = (state = initState, action) => {
@@ -40,18 +42,24 @@ const authReducer = (state = initState, action) => {
       };
     case types.SIGN_UP:
       console.log("BEGIN SIGN UP");
-      return state;
+      return {
+        ...state,
+        signupLoader: true
+      };
     case types.SIGN_UP_SUCCESS:
       console.log("SIGNUP SUCCESS");
       return {
         ...state,
-        signupError: null
+        signupError: null,
+        signupSuccess: true,
+        signupLoader: false
       };
     case types.SIGN_UP_FAILURE:
       console.log("SIGNUP FAILURE");
       return {
         ...state,
-        signupError: action.payload
+        signupError: action.payload,
+        signupLoader: false
       };
     default:
       return state;

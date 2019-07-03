@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { signUp } from "../../../store/actions/authActions";
@@ -23,16 +23,32 @@ import {
 import { Input } from "../../~reusables/atoms/Inputs";
 import { ButtonPrimary } from "../../~reusables/atoms/Buttons";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
+import ComponentLoader from "../../~reusables/molecules/ComponentLoader";
+import WelcomeModal from "../../~reusables/modals/WelcomeModal";
+import ThemeModal from "../../~reusables/modals/ThemeModal";
+import SkillsModal from "../../~reusables/modals/SkillsModal";
+import ProjectModal from "../../~reusables/modals/ProjectModal";
 
 const SignupBody = props => {
-  const { user, signUp, signupError } = props;
+  const { user, signUp, signupError, signupLoader, signupSuccess, skills } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [welcomeModal, setWelcomeModal] = useState(null);
+  const [themeModal, setThemeModal] = useState(null);
+  const [skillModal, setSkillModal] = useState(null);
+  const [projectModal, setProjectModal] = useState(null);
+  console.log(signupSuccess);
 
   let isDark = null;
   if (user) {
     isDark = user.length > 0 ? user[0].isDark : null;
   }
+
+  useEffect(() => {
+    if (signupSuccess) {
+      setWelcomeModal(true);
+    }
+  }, [signupSuccess]);
 
   const onEmailChange = e => {
     setEmail(e.target.value);
@@ -49,6 +65,37 @@ const SignupBody = props => {
 
   return (
     <StyledSignupBody isDark={isDark}>
+      {welcomeModal ? (
+        <WelcomeModal
+          user={user}
+          closeModal={setWelcomeModal}
+          setNextModal={setThemeModal}
+        />
+      ) : null}
+      {themeModal ? (
+        <ThemeModal
+          user={user}
+          closeModal={setThemeModal}
+          setNextModal={setSkillModal}
+          isDark={isDark}
+        />
+      ) : null}
+      {skillModal ? (
+        <SkillsModal
+          user={user}
+          closeModal={setSkillModal}
+          skillModalStatus={skillModal}
+          setNextModal={setProjectModal}
+        />
+      ) : null}
+      {projectModal ? (
+        <ProjectModal
+        skills={skills}
+          user={user}
+          closeModal={setProjectModal}
+          skillModalStatus={projectModal}
+        />
+      ) : null}
       <div>
         <h1>Your Skills-Based Resume</h1>
         <p>
@@ -73,6 +120,9 @@ const SignupBody = props => {
             Sign Up
           </ButtonPrimary>
         </form>
+        {signupLoader ? (
+          <ComponentLoader isDark={isDark} height="50px" />
+        ) : null}
         {signupError ? <p className="error">{signupError}</p> : null}
       </div>
     </StyledSignupBody>
@@ -81,7 +131,9 @@ const SignupBody = props => {
 
 const mapStateToProps = state => {
   return {
-    signupError: state.auth.signupError
+    signupError: state.auth.signupError,
+    signupSuccess: state.auth.signupSuccess,
+    signupLoader: state.auth.signupLoader
   };
 };
 
@@ -110,7 +162,7 @@ const StyledSignupBody = styled.main`
       font-size: ${heading_1};
     }
 
-    p {
+    > p {
       margin: 0 auto;
       color: ${text};
       font-size: ${body_hero};
@@ -124,7 +176,7 @@ const StyledSignupBody = styled.main`
       font-size: ${body_1};
     }
 
-    form {
+    > form {
       margin: ${medium_space_3} auto;
       width: 40%;
       display: flex;
@@ -135,14 +187,14 @@ const StyledSignupBody = styled.main`
     @media only screen and (max-width: ${tablet_max_width}) {
       padding: ${medium_space_2} 0;
 
-      h1 {
+      > h1 {
         font-size: ${heading_2};
       }
-      p {
+      > p {
         font-size: ${body_1};
         width: 90%;
       }
-      form {
+      > form {
         width: 70%;
       }
     }

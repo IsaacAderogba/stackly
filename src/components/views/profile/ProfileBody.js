@@ -141,7 +141,7 @@ const ProfileBody = props => {
               isDark={isDark}
               value={lastName}
               onChange={onLastNameChange}
-              placeholder="Your first name"
+              placeholder="Your last name"
             />
           )}
         </div>
@@ -220,7 +220,7 @@ const StyledBody = styled.section`
         flex-basis: 200px;
         flex-grow: 1;
         max-width: 47%;
-        border: 2px solid ${text};
+        border: 2px solid ${lightgrey};
         border-radius: 8px;
         cursor: pointer;
 

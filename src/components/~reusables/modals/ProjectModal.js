@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import Select from "react-select";
 import {
   createProject,
   updateProject
 } from "../../../store/actions/projectActions";
 import { ButtonPrimary } from "../atoms/Buttons";
-import { background, white, text } from "../variables/colors";
+import { background, white, text, alt_background } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
@@ -17,9 +18,17 @@ import { small_space, medium_space_1 } from "../variables/spacing";
 import ColorPicker from "../atoms/ColorPicker";
 
 const ProjectModal = props => {
-  const { closeModal, user, skills, createProject, selectProject } = props;
+  const {
+    closeModal,
+    user,
+    skills,
+    createProject,
+    selectProject,
+    skillModalStatus,
+    history
+  } = props;
   const [projectColor, setProjectColor] = useState(
-    selectProject ? selectProject.color : "#be215b"
+    selectProject ? selectProject.color : "#828fff"
   );
   const [projectName, setProjectName] = useState(
     selectProject ? selectProject.name : ""
@@ -42,7 +51,17 @@ const ProjectModal = props => {
 
   const onFormSubmit = e => {
     e.preventDefault();
-    if (selectProject) {
+    if (skillModalStatus) {
+      createProject({
+        userId: user[0].id,
+        name: projectName,
+        url: projectUrl,
+        skills: relatedSkills,
+        color: projectColor
+      });
+      closeModal(false);
+      history.push("/skills");
+    } else if (selectProject) {
       props.updateProject({
         name: projectName,
         url: projectUrl,
@@ -51,7 +70,8 @@ const ProjectModal = props => {
         allSkills: skills,
         id: selectProject.id
       });
-      // update the project
+      props.setSelectProject(null);
+      closeModal(false);
     } else {
       createProject({
         userId: user[0].id,
@@ -60,9 +80,9 @@ const ProjectModal = props => {
         skills: relatedSkills,
         color: projectColor
       });
+      props.setSelectProject(null);
+      closeModal(false);
     }
-    props.setSelectProject(null);
-    closeModal(false);
   };
 
   const onCloseModal = () => {
@@ -75,9 +95,11 @@ const ProjectModal = props => {
       <div className="popup">
         <div className="popup-inner">
           <div className="options">
-            <span className="close" onClick={onCloseModal}>
-              Close
-            </span>
+            {skillModalStatus ? null : (
+              <span className="close" onClick={onCloseModal}>
+                Close
+              </span>
+            )}
             <ColorPicker setProjectColor={setProjectColor} />
             {selectProject ? (
               <span className="delete" onClick={onCloseModal}>
@@ -110,9 +132,13 @@ const ProjectModal = props => {
               options={skills ? skillOptions : []}
               onChange={e => setRelatedSkills(e)}
             />
-            <ButtonPrimary>
-              {selectProject ? "Update Project" : "Enter Project"}
-            </ButtonPrimary>
+            {skillModalStatus ? (
+              <ButtonPrimary>Complete</ButtonPrimary>
+            ) : (
+              <ButtonPrimary>
+                {selectProject ? "Update Project" : "Enter Project"}
+              </ButtonPrimary>
+            )}
           </form>
           <div className="space-2" />
         </div>
@@ -194,7 +220,7 @@ const StyledModal = styled.div`
   }
   .popup-inner {
     padding: ${medium_space_1};
-    background: ${white};
+    background: ${alt_background};
     position: absolute;
     left: 25%;
     right: 25%;
@@ -250,6 +276,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default compose(
+  withRouter,
   connect(
     null,
     mapDispatchToProps

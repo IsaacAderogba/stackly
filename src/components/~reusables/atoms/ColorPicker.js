@@ -5,7 +5,7 @@ import { SketchPicker } from "react-color";
 class ColorPicker extends React.Component {
   state = {
     displayColorPicker: false,
-    color: "#52D2BC"
+    color: "#828fff"
   };
 
   handleClick = () => {

@@ -61,9 +61,7 @@ export const updateProject = project => {
             .then(() => {
               console.log("skill updated");
 
-              // REMOVAL PROCESS AND STAY THE SAME
               // my new project and its related skills is the source of truth for its bindings
-
               // Iterate over each skill we have and see if it has THIS project's id in its projects array
               project.allSkills.forEach(offlineSkill => {
                 console.log(offlineSkill, project.id)

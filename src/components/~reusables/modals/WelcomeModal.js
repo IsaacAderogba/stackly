@@ -9,79 +9,52 @@ import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
 import { small_space, medium_space_1 } from "../variables/spacing";
-import { createSkill, updateSkill } from "../../../store/actions/skillActions";
+import { updateProfile } from "../../../store/actions/userActions";
+import logo from "../assets/logo.png";
 
-const SkillsModal = props => {
-  const {
-    closeModal,
-    user,
-    createSkill,
-    selectSkill,
-    updateSkill,
-    skillModalStatus,
-    setNextModal
-  } = props;
-  const [skillName, setSkillName] = useState(
-    selectSkill ? selectSkill.name : ""
-  );
-  console.log(skillModalStatus);
+const WelcomeModal = props => {
+  const { closeModal, user, updateProfile, setNextModal } = props;
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  console.log(user);
 
   const onFormSubmit = e => {
     e.preventDefault();
-    if (skillModalStatus) {
-      createSkill({ userId: user[0].id, name: skillName });
-      setNextModal(true);
-    } else if (selectSkill) {
-      updateSkill({ id: selectSkill.id, name: skillName });
-      props.setSelectSkill(null);
-    } else {
-      createSkill({ userId: user[0].id, name: skillName });
-      props.setSelectSkill(null);
+    if (firstName && lastName) {
+      updateProfile({
+        firstName,
+        lastName,
+        id: user[0].id
+      });
     }
-    setSkillName("");
+    setNextModal(true);
     closeModal(false);
   };
-
-  const onCloseModal = () => {
-    props.setSelectSkill(null);
-    closeModal(false);
-  };
-
-  console.log(selectSkill);
 
   return (
     <StyledModal>
       <div className="popup">
         <div className="popup-inner">
-          <div className="options">
-            {skillModalStatus ? null : (
-              <span className="close" onClick={onCloseModal}>
-                Close
-              </span>
-            )}
-            {selectSkill ? (
-              <span className="delete" onClick={onCloseModal}>
-                Delete
-              </span>
-            ) : null}
-          </div>
-          <div className="space" />
           <form onSubmit={onFormSubmit}>
-            {selectSkill ? <h4>Update Skill</h4> : <h4>Enter a Skill</h4>}
-            <p>Stackly helps you highlight your skills based on evidence.</p>
+            <div className="logo-icon">
+              <img src={logo} alt="Stackly Logo" />
+            </div>
+            <h4>Welcome to Stackly</h4>
+            <p>Please enter your name to begin onboarding.</p>
             <Input
               required
-              value={skillName}
-              onChange={e => setSkillName(e.target.value)}
-              placeholder={selectSkill ? selectSkill.name : "Skill name"}
+              value={firstName}
+              onChange={e => setFirstName(e.target.value)}
+              placeholder={"Your first name"}
             />
-            {selectSkill ? (
-              <ButtonPrimary>Update Skill</ButtonPrimary>
-            ) : (
-              <ButtonPrimary>Add Skill</ButtonPrimary>
-            )}
+            <Input
+              required
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+              placeholder={"Your last name"}
+            />
+            <ButtonPrimary>Get Started</ButtonPrimary>
           </form>
-          <div className="space-2" />
         </div>
       </div>
     </StyledModal>
@@ -91,37 +64,17 @@ const SkillsModal = props => {
 const StyledModal = styled.div`
   z-index: 100;
 
-  .options {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  .logo-icon {
+    padding-top: ${small_space};
+    width: 60px;
+    img {
+      width: inherit;
+    }
   }
 
-  span,
   h4,
   p {
     text-align: center;
-  }
-
-  span {
-    cursor: pointer;
-  }
-
-  .space {
-    flex-grow: 5;
-  }
-
-  .space-2 {
-    flex-grow: 4;
-  }
-
-  .close {
-    font-size: ${body_1};
-    color: ${text};
-  }
-
-  .delete {
-    color: #bb0000;
   }
 
   h4 {
@@ -133,10 +86,15 @@ const StyledModal = styled.div`
 
   p {
     color: ${text};
+    font-size: ${body_1};
   }
 
   form {
-    width: 60%;
+    width: 90%;
+
+    input {
+      width: 80%;
+    }
   }
 
   .popup {
@@ -205,8 +163,7 @@ const StyledModal = styled.div`
 
 const mapDispatchToProps = dispatch => {
   return {
-    createSkill: skill => dispatch(createSkill(skill)),
-    updateSkill: skill => dispatch(updateSkill(skill))
+    updateProfile: profile => dispatch(updateProfile(profile))
   };
 };
 
@@ -216,4 +173,4 @@ export default compose(
     mapDispatchToProps
   ),
   firestoreConnect()
-)(SkillsModal);
+)(WelcomeModal);

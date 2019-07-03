@@ -66,7 +66,7 @@ export const signUp = newUser => {
           });
       })
       .then(() => {
-        dispatch({ type: SIGN_UP_SUCCESS });
+        dispatch({ type: SIGN_UP_SUCCESS, payload: true });
       })
       .catch(err => {
         dispatch({ type: SIGN_UP_FAILURE, payload: err.message });
