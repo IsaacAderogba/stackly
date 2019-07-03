@@ -9,7 +9,7 @@ import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
 import { small_space, medium_space_1 } from "../variables/spacing";
-import { createSkill, updateSkill } from "../../../store/actions/skillActions";
+import { createSkill, updateSkill, deleteSkill } from "../../../store/actions/skillActions";
 
 const SkillsModal = props => {
   const {
@@ -19,12 +19,13 @@ const SkillsModal = props => {
     selectSkill,
     updateSkill,
     skillModalStatus,
-    setNextModal
+    setNextModal,
+    deleteSkill
   } = props;
   const [skillName, setSkillName] = useState(
     selectSkill ? selectSkill.name : ""
   );
-  console.log(skillModalStatus);
+  console.log(selectSkill.id);
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -47,6 +48,11 @@ const SkillsModal = props => {
     closeModal(false);
   };
 
+  const onDeleteSkill = () => {
+    deleteSkill(selectSkill.id);
+    closeModal(false);
+  }
+
   console.log(selectSkill);
 
   return (
@@ -60,7 +66,7 @@ const SkillsModal = props => {
               </span>
             )}
             {selectSkill ? (
-              <span className="delete" onClick={onCloseModal}>
+              <span className="delete" onClick={onDeleteSkill}>
                 Delete
               </span>
             ) : null}
@@ -206,7 +212,8 @@ const StyledModal = styled.div`
 const mapDispatchToProps = dispatch => {
   return {
     createSkill: skill => dispatch(createSkill(skill)),
-    updateSkill: skill => dispatch(updateSkill(skill))
+    updateSkill: skill => dispatch(updateSkill(skill)),
+    deleteSkill: skillId => dispatch(deleteSkill(skillId))
   };
 };
 

@@ -41,6 +41,17 @@ export const updateSkill = skill => {
   };
 };
 
+export const deleteSkill = skillId => {
+  return (dispatch, getState, { getFirebase, getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection('skills').doc(skillId).delete().then(() => {
+      console.log('successful delete');
+    }).catch(() => {
+      console.log('delete failed')
+    })
+  }
+}
+
 export const filterSkills = skills => {
   return dispatch => {
     let filteredSkills = [...skills];
