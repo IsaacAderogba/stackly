@@ -7,7 +7,8 @@ import { withRouter } from "react-router-dom";
 import Select from "react-select";
 import {
   createProject,
-  updateProject
+  updateProject,
+  deleteProject
 } from "../../../store/actions/projectActions";
 import { ButtonPrimary } from "../atoms/Buttons";
 import { background, text, white } from "../variables/colors";
@@ -24,6 +25,7 @@ const ProjectModal = props => {
     skills,
     createProject,
     selectProject,
+    deleteProject,
     skillModalStatus,
     history
   } = props;
@@ -85,6 +87,19 @@ const ProjectModal = props => {
     }
   };
 
+  const onDeleteProject = () => {
+    deleteProject({
+      name: projectName,
+      url: projectUrl,
+      skills: relatedSkills,
+      color: projectColor,
+      allSkills: skills,
+      id: selectProject.id
+    });
+    props.setSelectProject(null);
+    closeModal(false);
+  };
+
   const onCloseModal = () => {
     props.setSelectProject(null);
     closeModal(false);
@@ -102,7 +117,7 @@ const ProjectModal = props => {
             )}
             <ColorPicker setProjectColor={setProjectColor} />
             {selectProject ? (
-              <span className="delete" onClick={onCloseModal}>
+              <span className="delete" onClick={onDeleteProject}>
                 Delete
               </span>
             ) : null}
@@ -271,7 +286,8 @@ const StyledModal = styled.div`
 const mapDispatchToProps = dispatch => {
   return {
     createProject: project => dispatch(createProject(project)),
-    updateProject: project => dispatch(updateProject(project))
+    updateProject: project => dispatch(updateProject(project)),
+    deleteProject: project => dispatch(deleteProject(project))
   };
 };
 

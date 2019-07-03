@@ -25,7 +25,6 @@ const SkillsModal = props => {
   const [skillName, setSkillName] = useState(
     selectSkill ? selectSkill.name : ""
   );
-  console.log(selectSkill.id);
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -50,6 +49,7 @@ const SkillsModal = props => {
 
   const onDeleteSkill = () => {
     deleteSkill(selectSkill.id);
+    props.setSelectSkill(null);
     closeModal(false);
   }
 

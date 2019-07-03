@@ -22,8 +22,7 @@ export const createProject = project => {
             .update({
               projects: [...skill.oldArray, res.id]
             })
-            .then(() => {
-            })
+            .then(() => {})
             .catch(err => {
               console.log(err);
             });
@@ -31,6 +30,36 @@ export const createProject = project => {
       })
       .catch(err => {
         console.log(err);
+      });
+  };
+};
+
+export const deleteProject = project => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firestore = getFirestore();
+    firestore
+      .collection("projects")
+      .doc(project.id)
+      .delete()
+      .then(() => {
+        // Iterate over each skill we have and see if it has THIS project's id in its projects array
+        project.allSkills.forEach(offlineSkill => {
+          let foundProject = offlineSkill.projects.find(
+            offlineProject => offlineProject === project.id
+          );
+          // if it does have the id, it means that this skill no longer has the project.
+          if (foundProject) {
+            firestore
+              .collection("skills")
+              .doc(offlineSkill.id)
+              .update({
+                projects: offlineSkill.projects.filter(p => p !== project.id)
+              });
+          }
+        });
+      })
+      .catch(() => {
+        console.log("delete failed");
       });
   };
 };
@@ -57,7 +86,6 @@ export const updateProject = project => {
               projects: Array.from(new Set([...skill.oldArray, project.id]))
             })
             .then(() => {
-
               // my new project and its related skills is the source of truth for its bindings
               // Iterate over each skill we have and see if it has THIS project's id in its projects array
               project.allSkills.forEach(offlineSkill => {

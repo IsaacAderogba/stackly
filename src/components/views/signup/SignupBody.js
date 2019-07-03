@@ -28,6 +28,8 @@ import WelcomeModal from "../../~reusables/modals/WelcomeModal";
 import ThemeModal from "../../~reusables/modals/ThemeModal";
 import SkillsModal from "../../~reusables/modals/SkillsModal";
 import ProjectModal from "../../~reusables/modals/ProjectModal";
+import lightHero from "../../~reusables/assets/light-hero.png";
+import darkHero from "../../~reusables/assets/dark-hero.png";
 
 const SignupBody = props => {
   const {
@@ -106,8 +108,8 @@ const SignupBody = props => {
         <h1>Your Skills-Based Resume</h1>
         <p>
           Stackly helps you highlight your skills based on evidence. For each
-          skill you list, proficiency is determined based on the number of
-          projects you have completed using that skill.
+          skill you list, proficiency is based on the number of projects you
+          have completed using that skill.
         </p>
         <form onSubmit={onFormSubmit}>
           <Input
@@ -131,6 +133,9 @@ const SignupBody = props => {
           <ComponentLoader isDark={isDark} height="50px" />
         ) : null}
         {signupError ? <p className="error">{signupError}</p> : null}
+        <div className="image-container">
+          <img src={isDark ? darkHero : lightHero} alt="hero" />
+        </div>
       </div>
     </StyledSignupBody>
   );
@@ -157,6 +162,15 @@ export default connect(
 
 const StyledSignupBody = styled.main`
   background-color: ${props => (props.isDark ? background : alt_background)};
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    img {
+      width: 90%;
+    }
+  }
 
   > div {
     max-width: 1280px;
