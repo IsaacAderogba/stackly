@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
   medium_space_3,
-  small_space
+  small_space,
+  medium_space_1
 } from "../../~reusables/variables/spacing";
 import Skill from "./Skill";
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
@@ -28,11 +29,11 @@ const SkillsBody = props => {
             );
           })
         : null}
-        <Link to="/">
-      <div className="logo-icon">
+      <Link to="/">
+        <div className="logo-icon">
           <img src={logo} alt="Stackly Logo" />
-      </div>
-        </Link>
+        </div>
+      </Link>
     </StyledSkillsBody>
   );
 };
@@ -41,7 +42,7 @@ const StyledSkillsBody = styled.main`
   padding: 0 ${medium_space_3};
 
   .logo-icon {
-    padding-top: ${small_space};
+    padding: ${medium_space_1} 0 ;
     width: 60px;
     margin: 0 auto;
     img {

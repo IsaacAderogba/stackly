@@ -12,11 +12,9 @@ import {
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import { secondary, alt_secondary } from "../../~reusables/variables/colors";
 import {
-  heading_2,
   heading_3,
   heading_4
 } from "../../~reusables/variables/font-sizes";
-import { ButtonTertiary, ButtonPrimary } from "../../~reusables/atoms/Buttons";
 import ProfileImage from "../../~reusables/molecules/ProfileImage";
 
 const SkillsHeader = props => {

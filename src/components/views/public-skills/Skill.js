@@ -4,8 +4,6 @@ import {
   lightgrey,
   text,
   primary,
-  secondary,
-  alt_secondary
 } from "../../~reusables/variables/colors";
 import { body_1 } from "../../~reusables/variables/font-sizes";
 import { small_space } from "../../~reusables/variables/spacing";

@@ -10,7 +10,7 @@ import {
   updateProject
 } from "../../../store/actions/projectActions";
 import { ButtonPrimary } from "../atoms/Buttons";
-import { background, white, text, alt_background } from "../variables/colors";
+import { background, text, alt_background } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
