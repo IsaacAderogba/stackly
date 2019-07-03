@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import { Link } from "react-router-dom";
 import { signOut } from "../../../store/actions/authActions";
 import {
   medium_space_3,
@@ -46,10 +47,17 @@ const SkillsHeader = props => {
           </ButtonTertiary>
         </div>
         <div>
-          <ButtonTertiary isDark={isDark} width="40px">
-            <i className="material-icons">send</i>
-          </ButtonTertiary>
-          <ButtonPrimary onClick={() => setProjectModal(true)} className="last-button" isDark={isDark} width="40px">
+          <Link target="_blank" to={`profile/${user[0].id}`}>
+            <ButtonTertiary isDark={isDark} width="40px">
+              <i className="material-icons">send</i>
+            </ButtonTertiary>
+          </Link>
+          <ButtonPrimary
+            onClick={() => setProjectModal(true)}
+            className="last-button"
+            isDark={isDark}
+            width="40px"
+          >
             <i className="material-icons">note_add</i>
           </ButtonPrimary>
         </div>
@@ -61,6 +69,11 @@ const SkillsHeader = props => {
 const StyledHeader = styled.div`
   flex-basis: 200px;
   padding: 0 ${medium_space_3};
+
+  a {
+    text-decoration: none;
+    color: ;
+  }
 
   h2 {
     margin-top: ${large_space};

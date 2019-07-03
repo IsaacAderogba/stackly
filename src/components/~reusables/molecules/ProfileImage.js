@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { secondary, text, alt_secondary } from '../variables/colors';
 import { body_1 } from '../variables/font-sizes'
 
-const ProfileImage = ({name, image, isDark, size}) => {
+const ProfileImage = ({name, image, isDark, size, fontSize}) => {
     return (
-        <StyledImage isDark={isDark} size={size}>
+        <StyledImage isDark={isDark} size={size} fontSize={fontSize}>
             <div>
                 <img src={image} alt="" />
             </div>
@@ -38,7 +38,7 @@ const StyledImage = styled.div`
     p {
         text-align: center;
         color: ${props => (props.isDark ? secondary : alt_secondary)};
-        font-size: ${body_1};
+        font-size: ${props => props.fontSize ? props.fontSize : body_1};
         font-weight: 600;
     }
 `

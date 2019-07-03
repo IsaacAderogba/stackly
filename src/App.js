@@ -5,6 +5,7 @@ import Login from "./components/views/login/Login";
 import Signup from "./components/views/signup/Signup";
 import Skills from "./components/views/skills/Skills";
 import Profile from "./components/views/profile/Profile";
+import PublicSkills from "./components/views/public-skills/PublicSkills";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
         path="/profile"
         render={routeProps => <Profile {...routeProps} />}
       />
+      <Route
+        path="/profile/:id"
+        render={routeProps => <PublicSkills {...routeProps} />}
+        />
     </StyledApp>
   );
 }
