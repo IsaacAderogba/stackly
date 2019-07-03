@@ -16,7 +16,7 @@ import ProjectModal from "../../~reusables/modals/ProjectModal";
 import ComponentLoader from "../../~reusables/molecules/ComponentLoader";
 
 const Skills = props => {
-  const { user, skills, projects } = props;
+  const { user, skills, projects, filteredSkills, filterState } = props;
   const [showSkillsModal, setSkillsModal] = useState(false);
   const [selectSkill, setSelectSkill] = useState(null);
   const [showProjectModal, setProjectModal] = useState(false);
@@ -48,13 +48,15 @@ const Skills = props => {
             />
           ) : null}
           <SkillsHeader
+            projects={projects}
             user={user}
+            skills={skills}
             setSkillsModal={setSkillsModal}
             setProjectModal={setProjectModal}
           />
           <SkillsBody
             user={user}
-            skills={skills}
+            skills={filterState ? filteredSkills : skills}
             projects={projects}
             setSkillsModal={setSkillsModal}
             setSelectSkill={setSelectSkill}
@@ -71,6 +73,8 @@ const Skills = props => {
 
 const mapStateToProps = state => {
   return {
+    filteredSkills: state.skills.filteredSkills,
+    filterState: state.skills.filterState,
     user: state.firestore.ordered.user,
     skills: state.firestore.ordered.skills,
     projects: state.firestore.ordered.projects,

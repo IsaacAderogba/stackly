@@ -6,6 +6,11 @@ import { compose } from "redux";
 import { Link } from "react-router-dom";
 import { signOut } from "../../../store/actions/authActions";
 import {
+  filterSkills,
+  deselectFilter
+} from "../../../store/actions/skillActions";
+
+import {
   medium_space_3,
   large_space,
   medium_space_1,
@@ -14,20 +19,19 @@ import {
 import { tablet_max_width } from "../../~reusables/variables/media-queries";
 import { secondary, alt_secondary } from "../../~reusables/variables/colors";
 import { heading_2 } from "../../~reusables/variables/font-sizes";
-import { ButtonTertiary, ButtonPrimary } from "../../~reusables/atoms/Buttons";
+import {
+  ButtonTertiary,
+  ButtonPrimary,
+  ButtonSecondary
+} from "../../~reusables/atoms/Buttons";
 
 const SkillsHeader = props => {
-  const { user, setSkillsModal, setProjectModal } = props;
+  const { user, setSkillsModal, setProjectModal, skills, filterState } = props;
 
   let isDark = null;
   if (user) {
     isDark = user.length > 0 ? user[0].isDark : null;
-    if (user.length > 0) {
-      console.log(user[0].isDark);
-    }
   }
-
-  console.log(user, isDark);
 
   return (
     <StyledHeader isDark={isDark}>
@@ -42,9 +46,23 @@ const SkillsHeader = props => {
           >
             <i className="material-icons">add</i>
           </ButtonPrimary>
-          <ButtonTertiary isDark={isDark} width="40px">
-            <i className="material-icons">filter_list</i>
-          </ButtonTertiary>
+          {filterState ? (
+            <ButtonSecondary
+              onClick={props.deselectFilter}
+              isDark={isDark}
+              width="40px"
+            >
+              <i className="material-icons">filter_list</i>
+            </ButtonSecondary>
+          ) : (
+            <ButtonTertiary
+              onClick={() => props.filterSkills(skills)}
+              isDark={isDark}
+              width="40px"
+            >
+              <i className="material-icons">filter_list</i>
+            </ButtonTertiary>
+          )}
         </div>
         <div>
           <Link target="_blank" to={`profile/${user[0].id}`}>
@@ -105,15 +123,23 @@ const StyledHeader = styled.div`
   }
 `;
 
+const mapStateToProps = state => {
+  return {
+    filterState: state.skills.filterState
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    signOut: () => dispatch(signOut())
+    signOut: () => dispatch(signOut()),
+    filterSkills: skills => dispatch(filterSkills(skills)),
+    deselectFilter: () => dispatch(deselectFilter())
   };
 };
 
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   ),
   firestoreConnect()
