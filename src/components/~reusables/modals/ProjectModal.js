@@ -10,7 +10,7 @@ import {
   updateProject
 } from "../../../store/actions/projectActions";
 import { ButtonPrimary } from "../atoms/Buttons";
-import { background, text, alt_background } from "../variables/colors";
+import { background, text, white } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
@@ -111,6 +111,13 @@ const ProjectModal = props => {
           <form onSubmit={onFormSubmit}>
             {selectProject ? <h4>Update Project</h4> : <h4>Enter a Project</h4>}
             <p>A project can be linked to one or more skills.</p>
+            <Select
+              styles={{ control: styles => ({ ...styles, borderColor: text }) }}
+              className="select"
+              isMulti
+              options={skills ? skillOptions : []}
+              onChange={e => setRelatedSkills(e)}
+            />
             <Input
               margin="16px"
               value={projectName}
@@ -124,13 +131,6 @@ const ProjectModal = props => {
               onChange={e => setProjectUrl(e.target.value)}
               required
               placeholder="Project url"
-            />
-            <Select
-              styles={{ control: styles => ({ ...styles, borderColor: text }) }}
-              className="select"
-              isMulti
-              options={skills ? skillOptions : []}
-              onChange={e => setRelatedSkills(e)}
             />
             {skillModalStatus ? (
               <ButtonPrimary>Complete</ButtonPrimary>
@@ -220,7 +220,7 @@ const StyledModal = styled.div`
   }
   .popup-inner {
     padding: ${medium_space_1};
-    background: ${alt_background};
+    background: ${white};
     position: absolute;
     left: 25%;
     right: 25%;

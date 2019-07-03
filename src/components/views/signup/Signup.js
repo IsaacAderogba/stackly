@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../../~reusables/organisms/Header";
-import Footer from "../../~reusables/organisms/Footer";
+import Header from "../../~reusables/layout/Header";
+import Footer from "../../~reusables/layout/Footer";
 import SignupBody from "./SignupBody";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";

@@ -9,7 +9,7 @@ import {
   text,
   primary,
   secondary,
-  alt_background,
+  white,
   lightgrey
 } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
@@ -160,7 +160,7 @@ const StyledModal = styled.div`
   }
   .popup-inner {
     padding: ${medium_space_1};
-    background: ${alt_background};
+    background: ${white};
     position: absolute;
     left: 25%;
     right: 25%;

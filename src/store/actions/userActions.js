@@ -12,10 +12,8 @@ export const setDarkTheme = darkTheme => {
         isDark: darkTheme.value
       })
       .then(() => {
-        console.log("success");
       })
       .catch(() => {
-        console.log("failure");
       });
   };
 };

@@ -16,7 +16,6 @@ export const createProject = project => {
       .then(res => {
         dispatch({ type: CREATE_PROJECT });
         project.skills.forEach(skill => {
-          console.log(skill);
           firestore
             .collection("skills")
             .doc(skill.value)
@@ -24,7 +23,6 @@ export const createProject = project => {
               projects: [...skill.oldArray, res.id]
             })
             .then(() => {
-              console.log("skill updated");
             })
             .catch(err => {
               console.log(err);
@@ -59,12 +57,10 @@ export const updateProject = project => {
               projects: Array.from(new Set([...skill.oldArray, project.id]))
             })
             .then(() => {
-              console.log("skill updated");
 
               // my new project and its related skills is the source of truth for its bindings
               // Iterate over each skill we have and see if it has THIS project's id in its projects array
               project.allSkills.forEach(offlineSkill => {
-                console.log(offlineSkill, project.id)
                 let foundProject = offlineSkill.projects.find(
                   offlineProject => offlineProject === project.id
                 );

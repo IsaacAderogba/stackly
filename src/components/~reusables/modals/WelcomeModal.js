@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { useSpring, animated } from "react-spring";
 
 import { ButtonPrimary } from "../atoms/Buttons";
-import { background, text, alt_background } from "../variables/colors";
+import { background, text, white } from "../variables/colors";
 import { heading_3, body_1 } from "../variables/font-sizes";
 import { Input } from "../atoms/Inputs";
 import { tablet_max_width } from "../variables/media-queries";
@@ -119,7 +119,7 @@ const StyledModal = styled.div`
   }
   .popup-inner {
     padding: ${medium_space_1};
-    background: ${alt_background};
+    background: ${white};
     position: absolute;
     left: 25%;
     right: 25%;

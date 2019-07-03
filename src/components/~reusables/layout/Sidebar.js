@@ -9,8 +9,6 @@ import SidebarItem from "../molecules/SidebarItem";
 
 const Sidebar = props => {
   const { user } = props;
-  console.log(user);
-
   let isDark = null;
   isDark = user[0].isDark;
 

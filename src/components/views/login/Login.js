@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../../~reusables/organisms/Header";
-import Footer from "../../~reusables/organisms/Footer";
+import Header from "../../~reusables/layout/Header";
+import Footer from "../../~reusables/layout/Footer";
 import LoginBody from "./LoginBody";
 import HasLoggedIn from "../../hoc/HasLoggedIn";
 import { connect } from "react-redux";
